@@ -1,0 +1,16 @@
+<nav class="side-bar">
+  <div class="container-fluid">
+    <a class="navbar-brand" routerLinkActive="active"
+       href="http://imu.universite-lyon.fr/projet/3mair-mesures-citoyennes-mobiles-et-modelisation-qualite-de-lair-et-ilots-de-chaleur-a-lyon/">
+      <img src="./assets/img/brand/3m-air.png" class="navbar-brand-img" alt="...">
+    </a>
+    <ul class="navbar-nav">
+      <li *ngFor="let menuItem of menuItems" class="{{this.menuItem.class}} nav-item">
+        <a routerLinkActive="active" [routerLink]="[menuItem.path]" class="nav-link">
+          <mat-icon class="menu-icon">{{this.menuItem.icon}}</mat-icon>
+          {{menuItem.title}}
+        </a>
+      </li>
+    </ul>
+  </div>
+</nav>

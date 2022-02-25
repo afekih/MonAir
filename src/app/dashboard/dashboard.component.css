@@ -1,0 +1,84 @@
+.main-container{
+  position: relative;
+  top: -17em;
+  /*width: 100%;*/
+  padding: 6em 3em;
+}
+
+.container-header {
+  /*width: 60%;*/
+  display: flex;
+  justify-content: flex-start;
+}
+
+.header-card {
+  width: 20%;
+  max-width: 15em;
+  margin-right: 3em;
+  flex-wrap: wrap;
+}
+
+.container-body {
+  margin-top: 2.5em;
+}
+
+.left-card-container {
+  flex: 2;
+  /*padding-right: 2em;*/
+}
+
+.left-card-container .mat-card{
+  height: 100%;
+  background: linear-gradient(87deg, #172b4d 0, #1a174d 100%) !important;
+  color: #fff !important;
+}
+
+.left-card-container .mat-card-subtitle{
+  color: #fff;
+}
+
+.left-card-container .mat-card-content{
+  height: 80%;
+}
+
+.left-card-container #measuresChart {
+  margin: 2em 0;
+}
+
+.right-card-container mat-card{
+  /*padding-bottom: 0;*/
+}
+
+.right-card-container .mat-card-content{
+  margin-right: -16px;
+  margin-left: -16px;
+  margin-top: 1em;
+}
+
+.right-card-container .mat-card-content table {
+  box-shadow: none;
+}
+
+.right-card-container .mat-card-content .mat-table {
+  width: 100%;
+}
+
+.right-card-container{
+  flex: 1;
+  padding-left: 2em;
+}
+
+.right-card-container .mat-progress-bar {
+  width: 50%;
+  margin-left: 10px;
+}
+
+.nodes-list-container {
+  flex: 1;
+}
+
+table {
+  width: 100%;
+}
+
+

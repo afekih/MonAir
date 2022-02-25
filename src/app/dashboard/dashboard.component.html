@@ -1,0 +1,116 @@
+<div class="main-container container-fluid">
+  <div class="container-header row">
+    <mat-card class="header-card">
+      <mat-card-title class="card-title">Number of nodes</mat-card-title>
+      <mat-card-content class="card-content">
+        <p *ngIf="this.nodesList.length>0">{{this.nodesList?.length}}</p>
+      </mat-card-content>
+    </mat-card>
+    <mat-card class="header-card">
+      <mat-card-title class="card-title">Number of measurements</mat-card-title>
+      <mat-card-content class="card-content">
+        <p>{{this.measuresNumber}}</p>
+      </mat-card-content>
+    </mat-card>
+  </div>
+  <div class="container-body">
+    <div class="row">
+      <div class="left-card-container">
+        <mat-card>
+          <mat-card-subtitle>Overview</mat-card-subtitle>
+          <mat-card-title>Number of measurements per month</mat-card-title>
+          <mat-card-content>
+<!--            <canvas-->
+<!--              baseChart id="measuresChart"-->
+<!--              [data]="chartData"-->
+<!--              [type]="'line'"-->
+<!--              [options]="chartOptions">-->
+<!--            </canvas>-->
+            <canvas id="measuresChart" height="100%"></canvas>
+<!--            <ngx-charts-line-chart-->
+<!--              [results]="saleData"-->
+<!--              [xAxisLabel]="'Months'"-->
+<!--              [legendTitle]="'Product Sale Chart'"-->
+<!--              [yAxisLabel]="'Measurements'"-->
+<!--              [legend]="false"-->
+<!--              [showXAxisLabel]="true"-->
+<!--              [showYAxisLabel]="true"-->
+<!--              [xAxis]="true"-->
+<!--              [yAxis]="true"-->
+<!--              [gradient]="false">-->
+<!--            </ngx-charts-line-chart>-->
+          </mat-card-content>
+        </mat-card>
+      </div>
+      <div class="right-card-container">
+        <mat-card>
+          <mat-card-subtitle>Nodes contribution</mat-card-subtitle>
+          <mat-card-title>Nodes contribution (Top 7)</mat-card-title>
+          <mat-card-content>
+            <table mat-table [dataSource]="nodesContributions" class="mat-elevation-z8">
+
+              <!--- Note that these columns can be defined in any order.
+                    The actual rendered columns are set as a property on the row definition" -->
+
+              <!-- Position Column -->
+              <ng-container matColumnDef="node_id">
+                <th mat-header-cell *matHeaderCellDef> Node ID</th>
+                <td mat-cell *matCellDef="let element"> {{element._id}} </td>
+              </ng-container>
+
+              <!-- Name Column -->
+              <ng-container matColumnDef="contribution">
+                <th mat-header-cell *matHeaderCellDef> Contribution</th>
+                <td mat-cell *matCellDef="let element">
+                  <div class="d-flex align-items-center">
+                    <span
+                      class="mr-2">{{((element.contribution.toFixed(2)) < 10 ? '0' + element.contribution.toFixed(2) : element.contribution.toFixed(2))}}%</span>
+                    <mat-progress-bar mode="determinate" [value]=element.contribution></mat-progress-bar>
+                  </div>
+                </td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="contributionTableColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: contributionTableColumns;"></tr>
+            </table>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </div>
+    <div class="row mt-5">
+      <div class="nodes-list-container">
+        <mat-card>
+<!--          <mat-card-subtitle>List of nodes</mat-card-subtitle>-->
+          <mat-card-title>List of nodes</mat-card-title>
+          <mat-card-content>
+            <table [dataSource]="dataSource" mat-table>
+
+              <!-- Position Column -->
+              <ng-container matColumnDef="Node ID">
+                <th *matHeaderCellDef mat-header-cell> Node ID</th>
+                <td *matCellDef="let element" mat-cell> {{element.node_id}} </td>
+              </ng-container>
+
+              <!-- Name Column -->
+              <ng-container matColumnDef="LoRaWAN Address">
+                <th *matHeaderCellDef mat-header-cell> LoRaWAN Address</th>
+                <td *matCellDef="let element" mat-cell> {{element['node_eui']}} </td>
+              </ng-container>
+
+              <!-- Weight Column -->
+              <ng-container matColumnDef="Last seen">
+                <th *matHeaderCellDef mat-header-cell> Last seen</th>
+                <td *matCellDef="let element" mat-cell>{{element['last_seen']}}</td>
+              </ng-container>
+
+              <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
+              <tr *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
+            </table>
+
+            <mat-paginator [pageSizeOptions]="[5]" showFirstLastButtons></mat-paginator>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </div>
+  </div>
+</div>

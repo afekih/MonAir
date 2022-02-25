@@ -1,0 +1,45 @@
+.side-bar {
+  height: 100%; /* Full-height: remove this if you want "auto" height */
+  /*width: 15rem; !* Set the width of the sidebar *!*/
+  /*flex: 1;*/
+  max-width: 250px;
+  /*position: fixed; !* Fixed Sidebar (stay in place on scroll) *!*/
+  z-index: 1; /* Stay on top */
+  top: 0; /* Stay at the top */
+  left: 0;
+  background-color: #fff; /* Black */
+  overflow-x: hidden; /* Disable horizontal scroll */
+  padding-top: 20px;
+}
+
+.side-bar .navbar-brand img{
+  /*max-height: 4.5rem!important;*/
+  max-width: 100%;
+}
+
+.side-bar .navbar-nav{
+  flex-direction: column;
+  margin: 1.5rem 1rem;
+}
+
+.side-bar .navbar-nav li {
+  display: flex;
+  flex-direction: row;
+  padding: 0.5rem;
+  align: center;
+}
+
+.side-bar .navbar-nav a.active {
+  color: red;
+}
+
+.side-bar .nav-link{
+  display: flex;
+  align-items: center;
+}
+
+.menu-icon {
+  min-width: 2.25rem;
+  font-size: 1.5rem;
+  line-height: 1.5rem;
+}
