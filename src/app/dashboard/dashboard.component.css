@@ -1,9 +1,9 @@
-.main-container{
-  position: relative;
-  top: -17em;
-  /*width: 100%;*/
-  padding: 6em 3em;
-}
+/*.main-container{*/
+/*  position: relative;*/
+/*  top: -17em;*/
+/*  !*width: 100%;*!*/
+/*  padding: 6em 3em;*/
+/*}*/
 
 .container-header {
   /*width: 60%;*/
@@ -43,6 +43,10 @@
 
 .left-card-container #measuresChart {
   margin: 2em 0;
+}
+
+::ng-deep.left-card-container .mat-form-field-flex {
+  background-color: white !important;
 }
 
 .right-card-container mat-card{

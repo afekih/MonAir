@@ -18,31 +18,14 @@ export class DashboardComponent implements OnInit {
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator | undefined;
 
   public datasets: any;
-  public clicked: boolean = true;
-  public clicked1: boolean = false;
   public nodesList: any[] = [];
   public nodesContributions: any[] = [];
   public measuresNumber: any;
-  public selectedYear = 2019;
+  public selectedYear = new Date().getFullYear().toString();
+  public measuresChart: any;
   public contributionTableColumns: string[] = ['node_id', 'contribution'];
+  public yearsList: string[];
   private labels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
-  // private chartData = {
-  //   labels: this.labels,
-  //   datasets: [{
-  //     label: 'Number of measurements during ' + this.selectedYear,
-  //     // radius: 5,
-  //     backgroundColor: '#fff',
-  //     borderColor: '#5e72e4',
-  //     data: [0],
-  //   }]
-  // };
-  //
-  // chartConfig: ChartConfiguration = {
-  //   type: 'line',
-  //   data: this.chartData,
-  //   options: {}
-  // };
-
 
   public chartData: ChartData<'line'> = {
     labels: this.labels,
@@ -55,12 +38,11 @@ export class DashboardComponent implements OnInit {
         // pointBackgroundColor:
         data: [0],
         tension: 0.5
-      },
-      // {label: 'Mobiles', data: [1000, 1200, 1050, 2000, 500], tension: 0.5}
+      }
     ],
   };
 
-  chartOptions: ChartOptions = {
+  public chartOptions: ChartOptions = {
     responsive: true,
     scales: {
       x: {
@@ -102,11 +84,11 @@ export class DashboardComponent implements OnInit {
   };
 
   constructor(private monAirService: MonAirService) {
+    this.yearsList = DashboardComponent.generateYearsList(2019);
   }
 
   //
   ngOnInit() {
-
     // this.nodesService.listen('nodesListUpdate').subscribe((data : any[])=>{
     //   this.nodesList = data;
     // });
@@ -131,53 +113,35 @@ export class DashboardComponent implements OnInit {
         this.nodesContributions = data;
       });
 
-    this.monAirService.getMeasuresPerMonth(2019)
-      .subscribe((data: { [key: string]: any[] }) => {
-        console.log('measures per month: ', data['number']);
-        this.chartData.datasets[0].data = data['number'];
-        let chartElement = <ChartItem>document.getElementById('measuresChart');
-        new Chart(
-          chartElement,
-          {
-            type: 'line',
-            data: this.chartData,
-            options: this.chartOptions
-          }
-        );
-        // this.data = this.datasets[0];
-        // this.updateOptions();
-      });
+    this.measuresChart = new Chart(
+      <ChartItem>document.getElementById('measuresChart'),
+      {
+        type: 'line',
+        data: this.chartData,
+        options: this.chartOptions
+      }
+    );
 
-    // parseOptions(Chart, chartOptions());
+    this.getMeasuresPerMonth(this.selectedYear);
 
-
-    // this.getMeasuresPerMonth(this.selectedYear);
   }
 
-  // ngAfterViewChecked(){
-  //   let chartElement = <ChartItem>document.getElementById('measuresChart');
-  //
-  //   let measuresChart = new Chart(
-  //     chartElement,
-  //     this.config
-  //   );
-  // }
 
-  public updateOptions() {
-    // this.measuresChart.data.datasets[0].data = this.data;
-    // // this.ordersChart.data.datasets[0].data = this.data;
-    // // this.getMeasuresPerMonth(this.selectedYear);
-    // this.measuresChart.update();
-    // // this.ordersChart.update();
-  }
-
-  getMeasuresPerMonth(year: number) {
+  getMeasuresPerMonth(year: string) {
     this.monAirService.getMeasuresPerMonth(year)
       .subscribe((data: { [key: string]: any[] }) => {
-        this.chartData.datasets = data['number'];
-        // this.data = this.datasets[0];
-        this.updateOptions();
+        this.chartData.datasets[0].data = data['number'];
+        this.measuresChart.update();
       });
+  }
+
+  private static generateYearsList(startYear: number) {
+    let currentYear = new Date().getFullYear();
+    let result: string[] = []
+    for (let year=startYear; year <= currentYear; year++){
+      result.push(year.toString());
+    }
+    return result
   }
 
 }

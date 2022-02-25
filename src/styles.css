@@ -4,6 +4,13 @@
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
+.main-container{
+  position: relative;
+  top: -17em;
+  /*width: 100%;*/
+  padding: 6em 3em;
+}
+
 .row {
   margin-left: 0 !important;
 }

@@ -52,7 +52,7 @@ export class MonAirService {
     // }]);
   }
 
-  getMeasuresPerMonth(year: number) {
+  getMeasuresPerMonth(year: string) {
     return this.http.get<{[key: string]: any[]}>(this.serverUrl + '/getMeasuresPerMonth?year=' + year);
   }
 
