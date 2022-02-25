@@ -1,1 +1,24 @@
 /* You can add global styles to this file, and also import other style files */
+@import "../node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css";
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.row {
+  margin-left: 0 !important;
+}
+
+.mat-card {
+  box-shadow: 0 0 2rem 0 rgb(136 152 170 / 15%) !important;
+}
+
+.card-title{
+  /*text-transform: uppercase;*/
+  font-size: 1em;
+  color: #7f8c8d;
+}
+
+.card-content {
+  font-size: 1.25rem;
+  font-weight: 600;
+}
