@@ -17,6 +17,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 .mat-card {
   box-shadow: 0 0 2rem 0 rgb(136 152 170 / 15%) !important;
+  border-radius: 10px !important;
 }
 
 .card-title{

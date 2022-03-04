@@ -45,12 +45,13 @@
   margin: 2em 0;
 }
 
-::ng-deep.left-card-container .mat-form-field-flex {
+:host ::ng-deep.left-card-container .mat-form-field-flex {
   background-color: white !important;
 }
 
 .right-card-container mat-card{
   /*padding-bottom: 0;*/
+  height: 100%;
 }
 
 .right-card-container .mat-card-content{
@@ -72,7 +73,7 @@
   padding-left: 2em;
 }
 
-.right-card-container .mat-progress-bar {
+.right-card-container .mat-progress-bar, .nodes-list-container .mat-progress-bar{
   width: 50%;
   margin-left: 10px;
 }

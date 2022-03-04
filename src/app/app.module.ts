@@ -21,6 +21,11 @@ import {NgChartsModule} from "ng2-charts";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatSelectModule} from "@angular/material/select";
 import {FormsModule} from "@angular/forms";
+import {AngularFireModule} from "@angular/fire/compat";
+import {AngularFireDatabaseModule} from "@angular/fire/compat/database";
+import {environment} from "../environments/environment";
+
+import {USE_EMULATOR} from "@angular/fire/compat/database";
 
 @NgModule({
   declarations: [
@@ -45,9 +50,13 @@ import {FormsModule} from "@angular/forms";
     NgChartsModule,
     MatFormFieldModule,
     MatSelectModule,
-    FormsModule
+    FormsModule,
+    AngularFireModule.initializeApp(environment.firebaseConfig),
+    AngularFireDatabaseModule
   ],
-  providers: [],
+  providers: [
+    { provide: USE_EMULATOR, useValue: environment.useEmulator ?  ['localhost', 9000] : undefined}
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {

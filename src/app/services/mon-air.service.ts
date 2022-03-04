@@ -1,21 +1,39 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import { environment } from '../../environments/environment';
+import {environment} from '../../environments/environment';
 import {Observable} from "rxjs";
+import {AngularFireDatabase, AngularFireList, AngularFireObject} from "@angular/fire/compat/database";
+import {map} from "rxjs/operators";
 
 @Injectable({
   providedIn: 'root'
 })
 export class MonAirService {
   private serverUrl = environment.serverUrl;
+  public dbMeasuresRef: AngularFireList<any>;
+  public dbNodesRef: AngularFireList<any>;
+  public dbStatsRef: AngularFireObject<any>;
 
-  constructor(private http: HttpClient) { }
-
-  getNodesList(): Observable<any[]> {
-    return this.http.get<any[]>(this.serverUrl + '/getNodesList');
+  constructor(private http: HttpClient, private fbDatabase: AngularFireDatabase) {
+    this.dbMeasuresRef = fbDatabase.list('/measures');
+    this.dbNodesRef = fbDatabase.list('/nodes');
+    this.dbStatsRef = fbDatabase.object('/stats');
   }
 
-  getNodesNumber() {
+  getAllData(): Observable<any> {
+    return this.dbMeasuresRef.snapshotChanges().pipe(map(changes =>
+        changes.map(c =>
+          ({ key: c.payload.key, ...c.payload.val() })
+        )
+      )
+    );
+  }
+
+  getNodesList(): Observable<any[]> {
+    return this.dbNodesRef.valueChanges().pipe();
+  }
+
+  getNumberOfNodes() {
     return this.http.get(this.serverUrl + '/getNodesNumber');
   }
 
@@ -23,8 +41,9 @@ export class MonAirService {
     return this.http.get(this.serverUrl + '/getMeasures');
   }
 
-  getMeasuresNumber() {
-    return this.http.get(this.serverUrl + '/getMeasuresNumber');
+  getNumberOfMeasures() {
+    return this.dbStatsRef.valueChanges().pipe();
+    // return this.http.get(this.serverUrl + '/getMeasuresNumber');
   }
 
   getMovingPoints(type: string, startDate: any, endDate: any, parameter: any) {
@@ -53,7 +72,8 @@ export class MonAirService {
   }
 
   getMeasuresPerMonth(year: string) {
-    return this.http.get<{[key: string]: any[]}>(this.serverUrl + '/getMeasuresPerMonth?year=' + year);
+    // return this.http.get<{ [key: string]: any[] }>(this.serverUrl + '/getMeasuresPerMonth?year=' + year);
+    return this.fbDatabase.object('/stats/measures_per_year/' + year).valueChanges().pipe();
   }
 
   getTopContributors(limit: number) {

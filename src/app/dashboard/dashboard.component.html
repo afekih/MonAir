@@ -1,15 +1,15 @@
 <div class="main-container container-fluid">
   <div class="container-header row">
     <mat-card class="header-card">
-      <mat-card-title class="card-title">Number of nodes</mat-card-title>
+      <mat-card-title class="card-title">Total number of nodes</mat-card-title>
       <mat-card-content class="card-content">
         <p *ngIf="this.nodesList.length>0">{{this.nodesList?.length}}</p>
       </mat-card-content>
     </mat-card>
     <mat-card class="header-card">
-      <mat-card-title class="card-title">Number of measurements</mat-card-title>
+      <mat-card-title class="card-title">Total measurements</mat-card-title>
       <mat-card-content class="card-content">
-        <p>{{this.measuresNumber}}</p>
+        <p>{{this.numberOfMeasures}}</p>
       </mat-card-content>
     </mat-card>
   </div>
@@ -68,13 +68,11 @@
               <!--- Note that these columns can be defined in any order.
                     The actual rendered columns are set as a property on the row definition" -->
 
-              <!-- Position Column -->
               <ng-container matColumnDef="node_id">
                 <th mat-header-cell *matHeaderCellDef> Node ID</th>
                 <td mat-cell *matCellDef="let element"> {{element._id}} </td>
               </ng-container>
 
-              <!-- Name Column -->
               <ng-container matColumnDef="contribution">
                 <th mat-header-cell *matHeaderCellDef> Contribution</th>
                 <td mat-cell *matCellDef="let element">
@@ -100,24 +98,55 @@
           <!--          <mat-card-subtitle>List of nodes</mat-card-subtitle>-->
           <mat-card-title>List of nodes</mat-card-title>
           <mat-card-content>
-            <table [dataSource]="dataSource" mat-table>
+            <table [dataSource]="dataSource" mat-table fixedLayout="true">
 
-              <!-- Position Column -->
-              <ng-container matColumnDef="Node ID">
+              <ng-container matColumnDef="node_id">
                 <th *matHeaderCellDef mat-header-cell> Node ID</th>
-                <td *matCellDef="let element" mat-cell> {{element.node_id}} </td>
+                <td *matCellDef="let element" mat-cell> {{element['node_id']}} </td>
               </ng-container>
 
-              <!-- Name Column -->
-              <ng-container matColumnDef="LoRaWAN Address">
+              <ng-container matColumnDef="lorawan_address">
                 <th *matHeaderCellDef mat-header-cell> LoRaWAN Address</th>
                 <td *matCellDef="let element" mat-cell> {{element['node_eui']}} </td>
               </ng-container>
 
-              <!-- Weight Column -->
-              <ng-container matColumnDef="Last seen">
+              <ng-container matColumnDef="contribution">
+                <th *matHeaderCellDef mat-header-cell> Contribution</th>
+                <td *matCellDef="let element" mat-cell>
+                  <!--                  {{element['contribution'].toFixed(2)}}-->
+                  <div class="d-flex align-items-center">
+                    <span
+                      class="mr-2">{{((element["contribution"].toFixed(2)) < 10 ? '0' + element["contribution"].toFixed(2) : element["contribution"].toFixed(2))}}
+                      %</span>
+                    <mat-progress-bar mode="determinate" [value]=element.contribution></mat-progress-bar>
+                  </div>
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="last_seen">
                 <th *matHeaderCellDef mat-header-cell> Last seen</th>
-                <td *matCellDef="let element" mat-cell>{{element['last_seen']}}</td>
+                <td *matCellDef="let element" mat-cell>{{element['last_seen_date']}}</td>
+              </ng-container>
+
+              <!--              TODO: make the "location" available only for authenticated users-->
+              <ng-container matColumnDef="last_location">
+                <th *matHeaderCellDef mat-header-cell> Last location</th>
+                <td *matCellDef="let element" mat-cell>
+                  <div
+                    *ngIf="element['last_position']['lat'] !== 0 && element['last_position']['lng'] !== 0; then trueBlock else falseBlock"></div>
+                  <ng-template #trueBlock>
+                    <a
+                      href="https://www.google.com/maps/place/45%C2%B047'00.9%22N+4%C2%B052'22.1%22E/@{{element['last_position']['lat']}},{{element['last_position']['lng']}},14z">
+                      {{element['last_position']['lat'].toFixed(4) + ', ' + element['last_position']['lng'].toFixed(4)}}
+                    </a>
+                  </ng-template>
+
+                  <ng-template #falseBlock>
+                    Unknown
+                  </ng-template>
+
+
+                </td>
               </ng-container>
 
               <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>

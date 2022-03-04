@@ -2,7 +2,11 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {MonAirService} from "../services/mon-air.service";
 import {MatPaginator} from '@angular/material/paginator';
 import {MatTableDataSource} from '@angular/material/table';
-import Chart, {ChartItem, ChartData, ChartOptions} from 'chart.js/auto';
+import Chart, {ChartItem} from 'chart.js/auto';
+import {chartOptions, chartData} from "../variables/chart-options";
+import * as moment from "moment/moment";
+
+// import {map} from 'rxjs/operators';
 
 
 @Component({
@@ -12,7 +16,7 @@ import Chart, {ChartItem, ChartData, ChartOptions} from 'chart.js/auto';
 })
 export class DashboardComponent implements OnInit {
 
-  displayedColumns: string[] = ['Node ID', 'LoRaWAN Address', 'Last seen'];
+  displayedColumns: string[] = ['node_id', 'lorawan_address', 'contribution', 'last_seen', 'last_location'];
   dataSource = new MatTableDataSource();
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator | undefined;
@@ -20,91 +24,43 @@ export class DashboardComponent implements OnInit {
   public datasets: any;
   public nodesList: any[] = [];
   public nodesContributions: any[] = [];
-  public measuresNumber: any;
+  public numberOfMeasures: number;
   public selectedYear = new Date().getFullYear().toString();
   public measuresChart: any;
   public contributionTableColumns: string[] = ['node_id', 'contribution'];
   public yearsList: string[];
-  private labels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
-
-  public chartData: ChartData<'line'> = {
-    labels: this.labels,
-    datasets: [
-      {
-        label: 'Number of measurements during ' + this.selectedYear,
-        // radius: 5,
-        pointBackgroundColor: '#f4f5f7',
-        // borderColor: '#5e72e4',
-        // pointBackgroundColor:
-        data: [0],
-        tension: 0.5
-      }
-    ],
-  };
-
-  public chartOptions: ChartOptions = {
-    responsive: true,
-    scales: {
-      x: {
-        grid: {
-          display: false,
-        }
-      },
-      y: {
-        grid: {
-          display: false,
-        }
-      }
-    },
-    elements: {
-      point: {
-        radius: 5,
-        backgroundColor: '#5e72e4',
-        borderColor: '#f4f5f7',
-        borderWidth: 0
-      },
-      line: {
-        tension: .4,
-        borderWidth: 4,
-        borderColor: '#5e72e4',
-        backgroundColor: '#5e72e4',
-        borderCapStyle: 'round'
-      },
-    },
-    plugins: {
-      legend: {
-        display: false,
-        position: 'bottom',
-        labels: {
-          usePointStyle: true,
-          padding: 16
-        }
-      },
-    },
-  };
 
   constructor(private monAirService: MonAirService) {
+    // moment.locale('fr');
     this.yearsList = DashboardComponent.generateYearsList(2019);
+    this.numberOfMeasures = 0;
   }
 
   //
   ngOnInit() {
-    // this.nodesService.listen('nodesListUpdate').subscribe((data : any[])=>{
-    //   this.nodesList = data;
-    // });
 
-    this.monAirService.getNodesList()
-      .subscribe((data: any[]) => {
-        this.nodesList = data;
-        // console.log('list of nodes: ', this.nodesList);
-        this.dataSource = new MatTableDataSource<any>(data);
-        this.dataSource.paginator = this.paginator!;
-      });
+    chartData.datasets[0].label = 'Number of measurements during ' + this.selectedYear;
 
-    this.monAirService.getMeasuresNumber()
-      .subscribe((data: { [x: string]: any; }) => {
+    this.monAirService.getNumberOfMeasures()
+      .subscribe((data: any) => {
         // console.log('number of measures: ', data);
-        this.measuresNumber = data['measuresNumber'];
+        this.numberOfMeasures = data["measures_count"];
+        this.monAirService.getNodesList()
+          .subscribe((data: Object[]) => {
+            this.nodesList = data;
+            this.nodesList.map(node => {
+              node["contribution"] = node["measures_count"] * 100 / this.numberOfMeasures;
+              console.log('date: ', node['last_seen']);
+              node["last_seen_date"] = moment(node['last_seen']).format('dddd, D MMMM YYYY - H[h]mm');
+              // console.log();
+            });
+            // this.nodesList.forEach(node =>{
+            //   node['contribution'] = node["measures_count"] * 100 / this.numberOfMeasures;
+            // });
+            // console.log(data);
+            this.dataSource = new MatTableDataSource<any>(data);
+            this.dataSource.paginator = this.paginator!;
+          });
       });
 
     this.monAirService.getTopContributors(7)
@@ -117,8 +73,8 @@ export class DashboardComponent implements OnInit {
       <ChartItem>document.getElementById('measuresChart'),
       {
         type: 'line',
-        data: this.chartData,
-        options: this.chartOptions
+        data: chartData,
+        options: chartOptions
       }
     );
 
@@ -129,8 +85,15 @@ export class DashboardComponent implements OnInit {
 
   getMeasuresPerMonth(year: string) {
     this.monAirService.getMeasuresPerMonth(year)
-      .subscribe((data: { [key: string]: any[] }) => {
-        this.chartData.datasets[0].data = data['number'];
+      .subscribe((data: any) => {
+        console.log(data);
+        const today = new Date()
+        if (year === today.getFullYear().toString()) {
+          console.log('same year');
+          chartData.datasets[0].data = data.slice(0, today.getMonth() + 1);
+        } else {
+          chartData.datasets[0].data = data;
+        }
         this.measuresChart.update();
       });
   }
@@ -138,7 +101,7 @@ export class DashboardComponent implements OnInit {
   private static generateYearsList(startYear: number) {
     let currentYear = new Date().getFullYear();
     let result: string[] = []
-    for (let year=startYear; year <= currentYear; year++){
+    for (let year = startYear; year <= currentYear; year++) {
       result.push(year.toString());
     }
     return result
