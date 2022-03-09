@@ -1,8 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
 /*@import "../node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css";*/
-/*@import "../node_modules/@angular/material/prebuilt-themes/pink-bluegrey.css";*/
-@import "themes/mon-air-theme.css";
-/*@import '~@mat-datetimepicker/core/datetimepicker/datetimepicker-theme.scss';*/
+///*@import "../node_modules/@angular/material/prebuilt-themes/pink-bluegrey.css";*/
+//@import "themes/mon-air-theme";
+@import "~@mat-datetimepicker/core/datetimepicker/datetimepicker-theme";
 
 html, body { height: 100%; }
 body {
@@ -46,6 +46,10 @@ body {
   margin-top: -12em;
   /*width: 100%;*/
   padding: 6em 3em;
+}
+
+.main-container .container-body {
+  margin-top: 2.5em;
 }
 
 .row {

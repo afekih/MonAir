@@ -12,7 +12,7 @@ import * as moment from "moment/moment";
 @Component({
   selector: 'app-old-dashboard',
   templateUrl: './old-dashboard.component.html',
-  styleUrls: ['./old-dashboard.component.css']
+  styleUrls: ['./old-dashboard.component.scss']
 })
 export class OldDashboardComponent implements OnInit {
 

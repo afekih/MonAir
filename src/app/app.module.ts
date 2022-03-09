@@ -38,6 +38,7 @@ import {MatDatepickerModule} from "@angular/material/datepicker";
 import {MatNativeDateModule} from "@angular/material/core";
 import {MatInputModule} from "@angular/material/input";
 import {MatDatetimepickerModule, MatNativeDatetimeModule} from "@mat-datetimepicker/core";
+import {MatMomentDatetimeModule} from "@mat-datetimepicker/moment";
 
 @NgModule({
   declarations: [
@@ -53,35 +54,38 @@ import {MatDatetimepickerModule, MatNativeDatetimeModule} from "@mat-datetimepic
     AppRoutingModule,
     BrowserAnimationsModule,
     NgbModule,
+    HttpClientModule,
+    NgChartsModule,
+    FormsModule,
+    ReactiveFormsModule,
     MatSidenavModule,
     MatIconModule,
     MatCardModule,
     MatButtonModule,
     MatTableModule,
     MatProgressBarModule,
-    HttpClientModule,
+    MatDatepickerModule,
     MatPaginatorModule,
-    NgChartsModule,
     MatFormFieldModule,
     MatSelectModule,
-    FormsModule,
-    ReactiveFormsModule,
-    AngularFireModule.initializeApp(environment.firebaseConfig),
-    AngularFireDatabaseModule,
+    MatRadioModule,
+    MatInputModule,
     MatSortModule,
     MatProgressSpinnerModule,
     MatDividerModule,
-    FontAwesomeModule,
-    MatRadioModule,
-    MatDatepickerModule,
-    MatNativeDateModule,
-    MatInputModule,
+    // MatNativeDateModule,
     MatDatetimepickerModule,
-    MatNativeDatetimeModule
+    // MatNativeDatetimeModule,
+    MatMomentDatetimeModule,
+    AngularFireModule.initializeApp(environment.firebaseConfig),
+    AngularFireDatabaseModule,
+    FontAwesomeModule,
+
   ],
   providers: [
     {provide: USE_EMULATOR, useValue: environment.useEmulator ? ['localhost', 9000] : undefined},
-    MatDatepickerModule
+    // MatDatepickerModule
+    // MatDatetimepickerModule
   ],
   bootstrap: [AppComponent]
 })
