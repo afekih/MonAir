@@ -49,6 +49,16 @@
   background-color: white !important;
 }
 
+.badge-dot i {
+  display: inline-block;
+  vertical-align: middle;
+  width: 0.4rem;
+  height: 0.4rem;
+  border-radius: 50%;
+  margin-right: 0.3rem;
+  background: #27ae60;
+}
+
 .right-card-container mat-card{
   /*padding-bottom: 0;*/
   height: 100%;
@@ -85,5 +95,3 @@
 table {
   width: 100%;
 }
-
-

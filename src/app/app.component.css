@@ -1,24 +1,4 @@
-@media (min-width: 768px) {
-  .root-container {
-    display: flex;
-    flex-direction: row;
-    height: 100%;
-  }
-}
-
-@media (max-width: 767px) {
-  .root-container {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-  }
-}
-
-.right-container {
-  /*margin-left: 16rem; !* Same as the width of the sidebar *!*/
-  /*padding: 2em 1em;*/
-  /*flex: 8;*/
-  width: 100%;
-  height: fit-content;
-  background-color: #eee;
-}
+/*app-sidebar {*/
+/*  width: 300px;*/
+/*  max-width: 16%;*/
+/*}*/

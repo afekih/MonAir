@@ -1,20 +1,36 @@
 .side-bar {
+  position: fixed;
+  width: 230px;
   height: 100%; /* Full-height: remove this if you want "auto" height */
   /*width: 15rem; !* Set the width of the sidebar *!*/
   /*flex: 1;*/
-  max-width: 250px;
+  /*max-width: 250px;*/
   /*position: fixed; !* Fixed Sidebar (stay in place on scroll) *!*/
   z-index: 1; /* Stay on top */
   top: 0; /* Stay at the top */
   left: 0;
-  background-color: #fff; /* Black */
+  /*background-color: #fff;*/
+  background-color: rgba(2,0,36,1);
   overflow-x: hidden; /* Disable horizontal scroll */
   padding-top: 20px;
 }
 
+.side-bar .divider {
+  width: 85%;
+  border-top: 1px solid #f5f6fa;
+  margin-bottom: 35px;
+  margin-top: 25px;
+}
+
+.side-bar .navbar-brand {
+  text-align: center;
+}
+
 .side-bar .navbar-brand img{
   /*max-height: 4.5rem!important;*/
-  max-width: 100%;
+  width: 100%;
+  /*min-width: 180px;*/
+  max-width: 190px;
 }
 
 .side-bar .navbar-nav{
@@ -25,21 +41,37 @@
 .side-bar .navbar-nav li {
   display: flex;
   flex-direction: row;
-  padding: 0.5rem;
+  padding: 0.2rem 0.8rem;
   align: center;
 }
 
-.side-bar .navbar-nav a.active {
-  color: red;
+.side-bar .navbar-nav a {
+  color: #bdc3c7;
 }
 
-.side-bar .nav-link{
+.side-bar .navbar-nav a.active {
+  color: #fff;
+}
+
+.menu-container .nav-link{
   display: flex;
   align-items: center;
+  /*color: #7f8c8d;*/
+  color: #2c3e50;
 }
 
-.menu-icon {
+.menu-container .menu-item-icon {
   min-width: 2.25rem;
   font-size: 1.5rem;
   line-height: 1.5rem;
 }
+
+.menu-container .nav-item {
+  border-radius: 1em;
+  margin-bottom: 1em;
+}
+
+.menu-container .nav-item.active {
+  background: rgba(236, 240, 241,0.3);
+}
+

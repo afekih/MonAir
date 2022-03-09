@@ -4,6 +4,7 @@ import {environment} from '../../environments/environment';
 import {Observable} from "rxjs";
 import {AngularFireDatabase, AngularFireList, AngularFireObject} from "@angular/fire/compat/database";
 import {map} from "rxjs/operators";
+import firebase from "firebase/compat";
 
 @Injectable({
   providedIn: 'root'
@@ -23,58 +24,33 @@ export class MonAirService {
   getAllData(): Observable<any> {
     return this.dbMeasuresRef.snapshotChanges().pipe(map(changes =>
         changes.map(c =>
-          ({ key: c.payload.key, ...c.payload.val() })
+          ({key: c.payload.key, ...c.payload.val()})
         )
       )
     );
   }
 
-  getNodesList(): Observable<any[]> {
+  getTotalNodesList(): Observable<any[]> {
     return this.dbNodesRef.valueChanges().pipe();
   }
 
-  getNumberOfNodes() {
-    return this.http.get(this.serverUrl + '/getNodesNumber');
-  }
-
-  getMeasures() {
-    return this.http.get(this.serverUrl + '/getMeasures');
-  }
-
-  getNumberOfMeasures() {
+  getTotalNumberOfMeasures() {
     return this.dbStatsRef.valueChanges().pipe();
     // return this.http.get(this.serverUrl + '/getMeasuresNumber');
   }
 
-  getMovingPoints(type: string, startDate: any, endDate: any, parameter: any) {
-    return this.http.post(this.serverUrl + '/getMoving' + type, {
-      "start_date": startDate,
-      "end_date": endDate,
-      "parameter": parameter
-    });
-  }
-
-  getNodesMeasures(type: string, startDate: any, endDate: any, parameter: any) {
-    return this.http.post(this.serverUrl + '/getMeasures' + type, {
-      "start_date": startDate,
-      "end_date": endDate,
-      "parameter": parameter
-    });
-    // return this.http.get(this.serverUrl + ':' + this.serverPort + '/getMeasures?start_date=' + startDate + '&end_date=' + endDate +
-    //   '&parameter=' + parameter);
-    // return this.http.get(this.serverUrl + ':' + this.serverPort + '/getNodeMeasuresFile?campaign=' + campaign +
-    //   '&start_date=' + startDate + '&end_date=' + endDate + '&parameter=' + parameter);
-    // return this.http.post(this.serverUrl + ':' + this.serverPort + '/getNodeMeasuresFile', [{
-    //   nodesList: nodesList,
-    //   start_date: startDate,
-    //   end_date: endDate
-    // }]);
+  getNumberOfMeasuresPerYear(year: string) {
+    const startDate = new Date(year + "-01-01T00:00:00.000Z");
+    const endDate = new Date(year + "-12-31T23:59:59.000Z");
+    return this.fbDatabase.database.ref().child('measures').orderByChild("date")
+      .startAt(startDate.toISOString()).endAt(endDate.toISOString());
   }
 
   getMeasuresPerMonth(year: string) {
-    // return this.http.get<{ [key: string]: any[] }>(this.serverUrl + '/getMeasuresPerMonth?year=' + year);
-    return this.fbDatabase.object('/stats/measures_per_year/' + year).valueChanges().pipe();
+    return this.fbDatabase.object('/stats/measures_per_year/' + year).valueChanges()
+      .pipe();
   }
+
 
   getTopContributors(limit: number) {
     return this.http.get<Object[]>(this.serverUrl + '/getTopContributorsNodes?limit=' + limit);

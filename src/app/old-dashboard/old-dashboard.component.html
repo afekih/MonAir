@@ -3,7 +3,7 @@
     <mat-card class="header-card">
       <mat-card-title class="card-title">Total number of nodes</mat-card-title>
       <mat-card-content class="card-content">
-        <p *ngIf="this.nodesList.length>0">{{this.nodesList?.length}}</p>
+        <p>{{this.nodesList?.length || 0}}</p>
       </mat-card-content>
     </mat-card>
     <mat-card class="header-card">
@@ -124,8 +124,11 @@
               </ng-container>
 
               <ng-container matColumnDef="last_seen">
-                <th *matHeaderCellDef mat-header-cell> Last seen</th>
-                <td *matCellDef="let element" mat-cell>{{element['last_seen_date']}}</td>
+                <th *matHeaderCellDef mat-header-cell> Last time online</th>
+                <td *matCellDef="let element" mat-cell>
+                 <span class="badge badge-dot mr-1"><i class="bg-success"></i></span>
+                  {{element['last_seen_date']}}
+                </td>
               </ng-container>
 
               <!--              TODO: make the "location" available only for authenticated users-->

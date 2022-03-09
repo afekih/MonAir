@@ -4,13 +4,14 @@ import {Router} from '@angular/router';
 declare interface RouteInfo {
   path: string;
   title: string;
-  icon: string;
+  icon: any;
   class: string;
 }
 
 export const ROUTES: RouteInfo[] = [
-  {path: '/dashboard', title: 'Dashboard', icon: 'dashboard', class: ''},
-  {path: '/maps', title: 'Maps', icon: 'home', class: ''}
+  {path: '/dashboard', title: 'Dashboard', icon: ['fas','tv'], class: ''},
+  {path: '/map', title: 'Map', icon: ['fas', 'globe-europe'], class: ''},
+  {path: '/old_dashboard', title: 'Old dashboard', icon: ['fas', 'chart-line'], class: ''},
 ];
 
 @Component({
@@ -20,16 +21,11 @@ export const ROUTES: RouteInfo[] = [
 })
 export class SidebarComponent implements OnInit {
   public menuItems: any[] = [];
-  // public isCollapsed = true;
 
-  constructor(private router: Router) {
-  }
+  constructor() {}
 
   ngOnInit(): void {
     this.menuItems = ROUTES.filter(menuItem => menuItem);
-    // this.router.events.subscribe((event) => {
-    //   this.isCollapsed = true;
-    // });
   }
 
 }

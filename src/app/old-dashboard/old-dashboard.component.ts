@@ -10,11 +10,11 @@ import * as moment from "moment/moment";
 
 
 @Component({
-  selector: 'app-dashboard',
-  templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.css']
+  selector: 'app-old-dashboard',
+  templateUrl: './old-dashboard.component.html',
+  styleUrls: ['./old-dashboard.component.css']
 })
-export class DashboardComponent implements OnInit {
+export class OldDashboardComponent implements OnInit {
 
   displayedColumns: string[] = ['node_id', 'lorawan_address', 'contribution', 'last_seen', 'last_location'];
   dataSource = new MatTableDataSource();
@@ -32,7 +32,7 @@ export class DashboardComponent implements OnInit {
 
   constructor(private monAirService: MonAirService) {
     // moment.locale('fr');
-    this.yearsList = DashboardComponent.generateYearsList(2019);
+    this.yearsList = OldDashboardComponent.generateYearsList(2019);
     this.numberOfMeasures = 0;
   }
 
@@ -41,16 +41,18 @@ export class DashboardComponent implements OnInit {
 
     chartData.datasets[0].label = 'Number of measurements during ' + this.selectedYear;
 
-    this.monAirService.getNumberOfMeasures()
+    this.monAirService.getNumberOfMeasuresPerYear(this.selectedYear);
+
+    this.monAirService.getTotalNumberOfMeasures()
       .subscribe((data: any) => {
         // console.log('number of measures: ', data);
         this.numberOfMeasures = data["measures_count"];
-        this.monAirService.getNodesList()
+        this.monAirService.getTotalNodesList()
           .subscribe((data: Object[]) => {
             this.nodesList = data;
             this.nodesList.map(node => {
               node["contribution"] = node["measures_count"] * 100 / this.numberOfMeasures;
-              console.log('date: ', node['last_seen']);
+              // console.log('date: ', node['last_seen']);
               node["last_seen_date"] = moment(node['last_seen']).format('dddd, D MMMM YYYY - H[h]mm');
               // console.log();
             });
@@ -86,13 +88,13 @@ export class DashboardComponent implements OnInit {
   getMeasuresPerMonth(year: string) {
     this.monAirService.getMeasuresPerMonth(year)
       .subscribe((data: any) => {
-        console.log(data);
+        // console.log(data);
         const today = new Date()
         if (year === today.getFullYear().toString()) {
-          console.log('same year');
-          chartData.datasets[0].data = data.slice(0, today.getMonth() + 1);
+          // console.log('same year');
+          chartData.datasets[0].data = data['monthly_stats'].slice(0, today.getMonth() + 1);
         } else {
-          chartData.datasets[0].data = data;
+          chartData.datasets[0].data = data['monthly_stats'];
         }
         this.measuresChart.update();
       });
