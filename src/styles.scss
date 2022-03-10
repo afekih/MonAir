@@ -8,7 +8,8 @@ html, body { height: 100%; }
 body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif !important;
-  background-color: #f5f6fa;
+  //background-color: #f5f6fa;
+  background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,18,121,1) 28%, rgba(0,212,255,1) 100%);
 }
 
 @media (min-width: 768px) {
@@ -43,7 +44,7 @@ body {
 .main-container{
   /*position: relative;*/
   /*top: -12em;*/
-  margin-top: -12em;
+  margin-top: -19em;
   /*width: 100%;*/
   padding: 6em 3em;
 }
@@ -53,8 +54,8 @@ body {
 }
 
 .row {
-  margin-left: 0 !important;
-  margin-right: 0 !important;
+  margin-left: 0 ;
+  margin-right: 0 ;
 }
 
 .mat-card {
@@ -70,11 +71,11 @@ body {
 
 .card-content {
   font-size: 1.25rem;
-  font-weight: 600;
+  font-weight: 500;
 }
 
 .mat-card-subtitle {
-  font-weight: 600;
+  font-weight: 500;
   text-transform: uppercase;
 }
 

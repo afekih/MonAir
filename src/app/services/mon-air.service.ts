@@ -4,7 +4,7 @@ import {environment} from '../../environments/environment';
 import {Observable} from "rxjs";
 import {AngularFireDatabase, AngularFireList, AngularFireObject} from "@angular/fire/compat/database";
 import {map} from "rxjs/operators";
-import firebase from "firebase/compat";
+// import firebase from "firebase/compat";
 
 @Injectable({
   providedIn: 'root'
@@ -54,6 +54,20 @@ export class MonAirService {
 
   getTopContributors(limit: number) {
     return this.http.get<Object[]>(this.serverUrl + '/getTopContributorsNodes?limit=' + limit);
+  }
+
+  getNodesMeasures(startDate: string, endDate: string, parameter: string) {
+    return this.fbDatabase.database.ref().child('measures').orderByChild("date")
+      .startAt(new Date(startDate).toISOString()).endAt(new Date(endDate).toISOString())
+      .get().then(snapshot => {
+        let measures: any[] = [];
+        snapshot.forEach(measure => {
+          if (measure.val()["lng"] !== 0 && measure.val()["lat"] !== 0) {
+            measures.push(measure.val());
+          }
+        });
+        return measures;
+      });
   }
 
   dummy() {
