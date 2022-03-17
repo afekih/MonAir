@@ -1,0 +1,10 @@
+<svg width="1440" height="320" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+ <g>
+  <title>Layer 1</title>
+   <linearGradient id="gradient" x2="0.35" y2="1">
+     <stop offset="0%" stop-color="#11cdef" />
+     <stop offset="100%" stop-color="#1171ef" />
+   </linearGradient>
+  <path fill="url(#gradient)" d="m1099,225.3c96,-16.3 29,-72.3 125,-88.6c96,-15.7 83,-114.7 131,-141l169,3.3l0,322l-48,0c-48,0 -144,0 -240,0l-234,-1c48.33333,-38.9 26.66667,-62.8 97,-94.7z" id="svg_1"/>
+ </g>
+</svg>

@@ -1,0 +1,42 @@
+.parameter-selector-container {
+  flex: 2;
+}
+
+.parameter-selector-container .radio-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+:host ::ng-deep .parameter-selector-container .radio-container .mat-radio-label {
+  margin-bottom: 0.15em 0;
+}
+
+.animated-card {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.container-body .card {
+  border-radius: 10px;
+}
+
+.container-body .map-canvas {
+  width: 100%;
+  height: 840px;
+  border-radius: 10px;
+}
+
+::ng-deep .mapboxgl-popup-anchor-bottom {
+  max-width: 100% !important;
+}
+
+::ng-deep .mapboxgl-popup-content {
+  padding: 15px !important;
+  border-radius: 10px !important;
+}
+
+::ng-deep .mapboxgl-popup-content p {
+  margin-bottom: 5px !important;
+}

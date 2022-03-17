@@ -1,0 +1,179 @@
+<div class="main-container container-fluid">
+  <div class="container-header row">
+    <div class="row totals-container">
+      <mat-card class="header-card">
+        <mat-card-title class="card-title">Total # of measures</mat-card-title>
+        <mat-card-content class="card-content">
+          <p>{{this.totalNumberOfMeasures}}</p>
+        </mat-card-content>
+      </mat-card>
+      <mat-card class="header-card">
+        <mat-card-title class="card-title">Total # of nodes</mat-card-title>
+        <mat-card-content class="card-content">
+          <p>{{this.nodesList?.length || 0}}</p>
+        </mat-card-content>
+      </mat-card>
+    </div>
+    <div class="row year-selector-container">
+      <!--      <mat-card class="header-card">-->
+      <!--        <mat-card-title class="card-title">Number of nodes</mat-card-title>-->
+      <!--        <mat-card-content class="card-content">-->
+      <!--          <p>{{this.yearlyNodesNumber}}</p>-->
+      <!--        </mat-card-content>-->
+      <!--      </mat-card>-->
+      <!--      <mat-card class="header-card">-->
+      <!--        <mat-card-title class="card-title">Number of measures</mat-card-title>-->
+      <!--        <mat-card-content class="card-content">-->
+      <!--          <p>{{this.yearlyNumberOfMeasures || 0}}</p>-->
+      <!--        </mat-card-content>-->
+      <!--      </mat-card>-->
+      <mat-card>
+        <!--        <mat-card-title class="card-title">Selected year</mat-card-title>-->
+        <mat-card-content class="card-content">
+          <mat-form-field appearance="legacy">
+            <mat-label>Year</mat-label>
+            <mat-select [(value)]="this.selectedYear"
+                        (selectionChange)="this.getMeasuresPerMonth(this.selectedYear)">
+              <mat-option *ngFor="let year of this.yearsList" [value]="year">{{year}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+  <div class="container-body">
+    <div class="row">
+      <div class="left-card-container">
+        <mat-card>
+          <div class="row align-items-center">
+            <div class="col">
+              <mat-card-subtitle>Overview</mat-card-subtitle>
+              <mat-card-title>Number of measurements per month</mat-card-title>
+            </div>
+          </div>
+          <mat-card-content style="height: 79%">
+            <canvas id="measuresBarChart" height="100%"></canvas>
+          </mat-card-content>
+        </mat-card>
+      </div>
+      <div class="right-card-container">
+        <mat-card>
+          <mat-card-subtitle>Statistics in {{this.selectedYear}}</mat-card-subtitle>
+          <mat-card-title>Contribution this year</mat-card-title>
+          <mat-card-content>
+            <div class="col mt-4">
+              <div class="spinner-container row justify-content-center">
+                <!--                <mat-progress-spinner class="spinner-background" diameter="180" mode="determinate"-->
+                <!--                                      value="100"></mat-progress-spinner>-->
+                <mat-progress-spinner
+                  diameter="180"
+                  strokeWidth="15"
+                  mode="determinate"
+                  value="{{this.yearlyNumberOfMeasures * 100 /this.totalNumberOfMeasures}}">
+                </mat-progress-spinner>
+                <div class="spinner-label text-center">
+                  {{(this.yearlyNumberOfMeasures * 100 /this.totalNumberOfMeasures).toFixed(0)}}%
+<!--                  <span class="subtitle mt-2">measurements</span>-->
+                </div>
+              </div>
+              <!--              <div class="row justify-content-center">-->
+              <!--                <div class="ldBar label-center" data-preset="circle" data-value="70"-->
+              <!--                     data-stroke="data:ldbar/res,gradient(0,0,#091279,#00d4ff)">-->
+              <!--                </div>-->
+              <!--                <div class="spinner-label">-->
+              <!--                  <div class="col text-center">-->
+              <!--                    <div class="mb-2">-->
+              <!--                      {{this.yearlyNumberOfMeasures}}-->
+              <!--                    </div>-->
+              <!--                    <span>measurements</span>-->
+              <!--                  </div>-->
+              <!--                </div>-->
+              <!--              </div>-->
+            </div>
+          </mat-card-content>
+          <div class="footer text-center mb-2"> Statistics </div>
+          <mat-divider inset></mat-divider>
+          <div class="row mt-3">
+            <div class="col footer text-center">
+              {{this.yearlyNodesNumber}}
+              <span class="subtitle">Active nodes</span>
+            </div>
+            <div class="col footer text-center">
+              {{this.yearlyNumberOfMeasures}}
+              <span class="subtitle">Measurements</span>
+            </div>
+          </div>
+        </mat-card>
+      </div>
+    </div>
+    <div class="row mt-5">
+      <div class="nodes-list-container">
+        <mat-card>
+          <!--          <mat-card-subtitle>List of nodes</mat-card-subtitle>-->
+          <mat-card-title>List of active nodes in {{this.selectedYear}}</mat-card-title>
+          <mat-card-content>
+            <table [dataSource]="dataSource" mat-table fixedLayout="true" matSort>
+
+              <ng-container matColumnDef="node_id">
+                <th *matHeaderCellDef mat-header-cell mat-sort-header> Node ID</th>
+                <td *matCellDef="let element" mat-cell> {{element['node_id']}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="lorawan_address">
+                <th *matHeaderCellDef mat-header-cell> LoRaWAN Address</th>
+                <td *matCellDef="let element" mat-cell> {{element['node_eui']}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="contribution">
+                <th *matHeaderCellDef mat-header-cell mat-sort-header> Total contribution</th>
+                <td *matCellDef="let element" mat-cell>
+                  <!--                  {{element['contribution'].toFixed(2)}}-->
+                  <div class="d-flex align-items-center">
+                    <span
+                      class="mr-2">{{((element["contribution"].toFixed(2)) < 10 ? '0' + element["contribution"].toFixed(2) : element["contribution"].toFixed(2))}}
+                      %</span>
+                    <mat-progress-bar mode="determinate" [value]=element.contribution></mat-progress-bar>
+                  </div>
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="last_seen">
+                <th *matHeaderCellDef mat-header-cell> Last time online</th>
+                <td *matCellDef="let element" mat-cell>
+                  <span class="badge badge-dot mr-1"><i class="bg-success"></i></span>
+                  {{element['last_seen_date']}}
+                </td>
+              </ng-container>
+
+              <!--              TODO: make the "location" available only for authenticated users-->
+              <ng-container matColumnDef="last_location">
+                <th *matHeaderCellDef mat-header-cell> Last known location</th>
+                <td *matCellDef="let element" mat-cell>
+                  <div
+                    *ngIf="element['last_position']['lat'] !== 0 && element['last_position']['lng'] !== 0; then trueBlock else falseBlock"></div>
+                  <ng-template #trueBlock>
+                    <a
+                      href="https://www.google.com/maps/place/45%C2%B047'00.9%22N+4%C2%B052'22.1%22E/@{{element['last_position']['lat']}},{{element['last_position']['lng']}},14z">
+                      {{element['last_position']['lat'].toFixed(4) + ', ' + element['last_position']['lng'].toFixed(4)}}
+                    </a>
+                  </ng-template>
+
+                  <ng-template #falseBlock>
+                    Unknown
+                  </ng-template>
+
+
+                </td>
+              </ng-container>
+
+              <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
+              <tr *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
+            </table>
+
+            <mat-paginator [pageSizeOptions]="[5]" showFirstLastButtons></mat-paginator>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </div>
+  </div>
+</div>

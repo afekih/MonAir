@@ -6,9 +6,18 @@ import {AngularFireDatabase, AngularFireList, AngularFireObject} from "@angular/
 import {map} from "rxjs/operators";
 // import firebase from "firebase/compat";
 
+const parameterUnits: { [key: string]: string } = {
+  'temperature': '°C',
+  'humidity': '%',
+  'pm1': 'µg/m3',
+  'pm25': 'µg/m3',
+  'pm10': 'µg/m3'
+}
+
 @Injectable({
   providedIn: 'root'
 })
+
 export class MonAirService {
   private serverUrl = environment.serverUrl;
   public dbMeasuresRef: AngularFireList<any>;
@@ -68,6 +77,10 @@ export class MonAirService {
         });
         return measures;
       });
+  }
+
+  getParamUnit(parameter: string) {
+    return parameterUnits[parameter]
   }
 
   dummy() {

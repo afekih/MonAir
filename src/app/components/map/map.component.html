@@ -1,0 +1,53 @@
+<div class="main-container container-fluid">
+  <div class="container-header row">
+    <mat-card class="animated-card">
+      <div class="row totals-container">
+        <div class="col date-selector-container d-flex">
+          <div class="col">
+            <mat-form-field class="date-field" appearance="legacy" (change)="this.log(this.startDate)">
+              <mat-label>Start date</mat-label>
+              <input matInput type="datetime-local" [(ngModel)]="this.startDate">
+            </mat-form-field>
+          </div>
+          <div class="col">
+            <mat-form-field class="date-field" appearance="legacy">
+              <mat-label>Start date</mat-label>
+              <input matInput type="datetime-local" [(ngModel)]="this.endDate">
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="col parameter-selector-container">
+          <mat-radio-group [(ngModel)]="this.selectedParameter" aria-label="Select an option" required color="primary"
+                           (change)="this.onParamChange()">
+            <div class="col d-flex" style="height: 100%">
+              <div class="col mr-1 radio-container">
+                <mat-radio-button value="temperature">Temperature</mat-radio-button>
+                <mat-radio-button value="humidity">Humidity</mat-radio-button>
+
+              </div>
+              <div class="col mr-1 radio-container">
+                <!--                <mat-radio-button value="no2">NO2</mat-radio-button>-->
+                <mat-radio-button value="pm1">PM 1</mat-radio-button>
+
+                <mat-radio-button value="pm25">PM 2.5</mat-radio-button>
+                <!--                <mat-radio-button value="pm10">PM 10</mat-radio-button>-->
+              </div>
+            </div>
+          </mat-radio-group>
+        </div>
+        <div class="col button-container align-items-center justify-content-center d-flex">
+          <button (click)="this.getNodeMeasuresPoints()" color="primary" mat-raised-button>Search</button>
+        </div>
+      </div>
+    </mat-card>
+  </div>
+  <div class="container-body">
+    <div class="col pl-0">
+      <div class="card shadow border-0">
+        <div class="map-canvas" id="map"></div>
+      </div>
+    </div>
+    <!--    TODO: add component for exporting data to csv/xlsx-->
+  </div>
+</div>
