@@ -17,6 +17,13 @@
           </div>
         </div>
 
+        <div class="col button-container align-items-center justify-content-center d-flex">
+          <button (click)="this.getNodeMeasuresPoints()" color="primary" mat-raised-button>Search</button>
+        </div>
+      </div>
+    </mat-card>
+    <mat-card class="ml-3" *ngIf="this.measures.length > 0">
+      <div class="row">
         <div class="col parameter-selector-container">
           <mat-radio-group [(ngModel)]="this.selectedParameter" aria-label="Select an option" required color="primary"
                            (change)="this.onParamChange()">
@@ -36,16 +43,33 @@
             </div>
           </mat-radio-group>
         </div>
-        <div class="col button-container align-items-center justify-content-center d-flex">
-          <button (click)="this.getNodeMeasuresPoints()" color="primary" mat-raised-button>Search</button>
-        </div>
       </div>
     </mat-card>
   </div>
   <div class="container-body">
-    <div class="col pl-0">
-      <div class="card shadow border-0">
-        <div class="map-canvas" id="map"></div>
+    <div class="row">
+      <div class="col pl-0 map-container">
+        <div class="card shadow border-0">
+          <div class="map-canvas" id="map"></div>
+        </div>
+      </div>
+      <div class="col exporter-container">
+        <mat-card>
+          <mat-card-subtitle>
+            Export data
+          </mat-card-subtitle>
+          <mat-card-content>
+            <div class="row">
+              <mat-form-field appearance="fill">
+                <mat-label>File name</mat-label>
+                <input matInput placeholder="Ex. monAir_data.csv" [value]="this.filename" required>
+              </mat-form-field>
+            </div>
+            <div class="row">
+              <button color="primary" mat-raised-button>Export</button>
+            </div>
+          </mat-card-content>
+        </mat-card>
       </div>
     </div>
     <!--    TODO: add component for exporting data to csv/xlsx-->

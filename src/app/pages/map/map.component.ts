@@ -51,10 +51,11 @@ import {state, trigger, style, transition, animate} from "@angular/animations";
 })
 
 export class MapComponent implements OnInit, OnDestroy {
-  private measures: any
+  public measures: any[] = [];
   public selectedParameter: string;
   public startDate: string;
   public endDate: string;
+  public filename: string;
   public map: any;
   private style = 'mapbox://styles/mapbox/streets-v11';
   isOpen = false;
@@ -69,6 +70,7 @@ export class MapComponent implements OnInit, OnDestroy {
     this.startDate = '2019-06-20T12:00';
     // this.log(this.startDate);
     this.endDate = '2019-06-20T17:00';
+    this.filename = "";
   }
 
   ngOnInit(): void {
@@ -290,12 +292,28 @@ export class MapComponent implements OnInit, OnDestroy {
             this.map.getCanvas().style.cursor = '';
           });
 
+          this.generateHeatmap();
+
         });
 
       });
 
-    this.isOpen = true;
+    // this.isOpen = true;
 
+
+  }
+
+  generateHeatmap() {
+    let points: any[] = []
+    this.measures.map((measure:any) => {
+      points.push({
+        lat: measure['lat'],
+        lon: measure['lng'],
+        val: measure[this.selectedParameter]
+      });
+    });
+
+    // console.log(points);
   }
 
   onParamChange() {
