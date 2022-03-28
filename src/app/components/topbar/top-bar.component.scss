@@ -15,7 +15,7 @@
   //box-shadow: 0 0 2em 0 rgb(136 152 170 / 15%) !important;
 }
 
-.title-container {
+.title-container, .sign-out-container {
   padding: 1em 2em;
 }
 
@@ -26,4 +26,8 @@
   font-family: Open Sans, sans-serif;
   font-weight: 600;
   line-height: 1.5;
+}
+
+.sign-out-button{
+  background-color: #000;
 }

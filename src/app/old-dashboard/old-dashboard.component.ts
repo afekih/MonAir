@@ -1,5 +1,5 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {MonAirService} from "../services/mon-air.service";
+import {MonAirService} from "../shared/services/mon-air.service";
 import {MatPaginator} from '@angular/material/paginator';
 import {MatTableDataSource} from '@angular/material/table';
 import Chart, {ChartItem} from 'chart.js/auto';

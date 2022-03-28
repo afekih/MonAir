@@ -62,11 +62,11 @@
             <div class="row">
               <mat-form-field appearance="fill">
                 <mat-label>File name</mat-label>
-                <input matInput placeholder="Ex. monAir_data.csv" [value]="this.filename" required>
+                <input matInput placeholder="Ex. monAir_data.csv" [(ngModel)]="this.filename" required>
               </mat-form-field>
             </div>
             <div class="row">
-              <button color="primary" mat-raised-button>Export</button>
+              <button color="primary" mat-raised-button (click)="this.exportData()">Export</button>
             </div>
           </mat-card-content>
         </mat-card>

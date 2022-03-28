@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {ROUTES} from '../sidebar/sidebar.component';
 import {Location} from '@angular/common';
+import {AuthService} from "../../shared/services/auth.service";
 
 @Component({
   selector: 'app-topbar',
@@ -12,7 +13,7 @@ export class TopBarComponent implements OnInit {
   public listTitles: any[] = [];
   public location: Location;
 
-  constructor(location: Location) {
+  constructor(location: Location, private authService: AuthService) {
     this.location = location;
   }
 
@@ -31,6 +32,10 @@ export class TopBarComponent implements OnInit {
       }
     }
     return 'Dashboard';
+  }
+
+  signOut() {
+    this.authService.signOut();
   }
 
 }

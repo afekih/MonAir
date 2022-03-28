@@ -1,6 +1,6 @@
 import {Component, OnInit, ViewChild, OnDestroy} from '@angular/core';
 import Chart, {ChartItem} from 'chart.js/auto';
-import {MonAirService} from "../../services/mon-air.service";
+import {MonAirService} from "../../shared/services/mon-air.service";
 import {barChartData, chartOptions} from "../../variables/chart-options";
 import * as moment from "moment/moment";
 import {MatPaginator} from '@angular/material/paginator';

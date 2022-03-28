@@ -1,5 +1,11 @@
 <div class="top-bar">
-  <div class="title-container">
-    <p class="title">{{getTitle()}}</p>
+  <div class="row d-flex justify-content-sm-between">
+    <div class="title-container">
+      <p class="title">{{getTitle()}}</p>
+    </div>
+    <div class="sign-out-container">
+      <button mat-mini-fab class="sign-out-button" color="accent" title="Log out"  (click)="this.signOut()"><mat-icon>logout</mat-icon></button>
+    </div>
   </div>
+
 </div>

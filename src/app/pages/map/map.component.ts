@@ -2,7 +2,7 @@ import {Component, OnInit, OnDestroy} from '@angular/core';
 import * as mapboxgl from "mapbox-gl";
 import * as moment from "moment/moment";
 import {environment} from "../../../environments/environment";
-import {MonAirService} from "../../services/mon-air.service";
+import {MonAirService} from "../../shared/services/mon-air.service";
 import {state, trigger, style, transition, animate} from "@angular/animations";
 
 
@@ -326,6 +326,10 @@ export class MapComponent implements OnInit, OnDestroy {
       // blue is higher when feature.properties.temperature is lower
       ['-', 255, ['*', 2, ["get", this.selectedParameter]]]
     ]);
+  }
+
+  exportData() {
+
   }
 
   ngOnDestroy(): void {

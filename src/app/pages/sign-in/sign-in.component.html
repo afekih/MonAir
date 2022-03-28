@@ -1,0 +1,26 @@
+<div class="login-container">
+  <mat-card>
+    <mat-card-title>Welcome back !</mat-card-title>
+    <mat-card-content>
+      <div class="row">
+        <mat-form-field appearance="fill">
+          <mat-label>Email</mat-label>
+          <input matInput type="email" required [(ngModel)]="this.email">
+
+        </mat-form-field>
+      </div>
+
+      <div class="row">
+        <mat-form-field appearance="fill">
+          <mat-label>Password</mat-label>
+          <input matInput type="password" required [(ngModel)]="this.password">
+        </mat-form-field>
+      </div>
+
+      <div class="row">
+        <button class="login-button" color="primary" mat-raised-button (click)="this.signIn()">Login</button>
+      </div>
+
+    </mat-card-content>
+  </mat-card>
+</div>

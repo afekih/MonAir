@@ -1,0 +1,25 @@
+.login-container {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 10em;
+}
+
+.login-container mat-card{
+  width: 30%;
+  text-align: center;
+}
+
+.login-container mat-card-title {
+  margin-top: 1em;
+  margin-bottom: 2em;
+}
+
+.login-container mat-card-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.login-container .login-button {
+  margin-top: 1em;
+}
