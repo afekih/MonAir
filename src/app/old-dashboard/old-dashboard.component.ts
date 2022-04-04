@@ -3,7 +3,7 @@ import {MonAirService} from "../shared/services/mon-air.service";
 import {MatPaginator} from '@angular/material/paginator';
 import {MatTableDataSource} from '@angular/material/table';
 import Chart, {ChartItem} from 'chart.js/auto';
-import {chartOptions, chartData} from "../variables/chart-options";
+import {chartOptions, chartData} from "../shared/variables/chart-options";
 import * as moment from "moment/moment";
 
 // import {map} from 'rxjs/operators';

@@ -14,6 +14,13 @@ const parameterUnits: { [key: string]: string } = {
   'pm10': 'µg/m3'
 }
 
+const regionOfInterest: any =  [
+  {"lat": 45.776087, "lon": 4.841163},
+  {"lat": 45.748183, "lon": 4.837987},
+  {"lat": 45.750998, "lon": 4.864165},
+  {"lat": 45.771896, "lon": 4.868800}
+]
+
 @Injectable({
   providedIn: 'root'
 })
@@ -25,7 +32,7 @@ export class MonAirService {
   public dbStatsRef: AngularFireObject<any>;
 
   constructor(private http: HttpClient, private fbDatabase: AngularFireDatabase) {
-    this.dbMeasuresRef = fbDatabase.list('/measures');
+    this.dbMeasuresRef = fbDatabase.list('/measuresRaw');
     this.dbNodesRef = fbDatabase.list('/nodes');
     this.dbStatsRef = fbDatabase.object('/stats');
   }
@@ -66,7 +73,7 @@ export class MonAirService {
   }
 
   getNodesMeasures(startDate: string, endDate: string, parameter: string) {
-    return this.fbDatabase.database.ref().child('measures').orderByChild("date")
+    return this.fbDatabase.database.ref().child('measuresRaw').orderByChild("date")
       .startAt(new Date(startDate).toISOString()).endAt(new Date(endDate).toISOString())
       .get().then(snapshot => {
         let measures: any[] = [];
@@ -82,6 +89,10 @@ export class MonAirService {
   getParamUnit(parameter: string) {
     return parameterUnits[parameter]
   }
+
+  getRoI() {
+    return regionOfInterest;
+}
 
   dummy() {
     return this.http.get(this.serverUrl + '/test');

@@ -23,14 +23,15 @@
 }
 
 .side-bar .navbar-brand {
+  width: 100%;
   text-align: center;
 }
 
-.side-bar .navbar-brand img{
+.side-bar .navbar-brand .navbar-brand-img{
   /*max-height: 4.5rem!important;*/
   width: 100%;
   /*min-width: 180px;*/
-  max-width: 190px;
+  max-width: 155px;
 }
 
 .side-bar .navbar-nav{

@@ -1,26 +1,71 @@
 <div class="login-container">
-  <mat-card>
-    <mat-card-title>Welcome back !</mat-card-title>
-    <mat-card-content>
-      <div class="row">
-        <mat-form-field appearance="fill">
-          <mat-label>Email</mat-label>
-          <input matInput type="email" required [(ngModel)]="this.email">
+  <!--  <mat-card>-->
+  <!--    <mat-card-title>Welcome back !</mat-card-title>-->
+  <!--    <mat-card-content>-->
+  <!--      <div class="row ">-->
 
-        </mat-form-field>
+  <!--      </div>-->
+  <!--      <div class="row">-->
+  <!--        <mat-form-field appearance="fill">-->
+  <!--          <mat-label>Email</mat-label>-->
+  <!--          <input matInput type="email" required [(ngModel)]="this.email">-->
+
+  <!--        </mat-form-field>-->
+  <!--      </div>-->
+
+  <!--      <div class="row">-->
+  <!--        <mat-form-field appearance="fill">-->
+  <!--          <mat-label>Password</mat-label>-->
+  <!--          <input matInput type="password" required [(ngModel)]="this.password">-->
+  <!--        </mat-form-field>-->
+  <!--      </div>-->
+
+  <!--      <div class="row">-->
+  <!--        <button class="login-button" color="primary" mat-raised-button (click)="this.signIn()">Login</button>-->
+  <!--      </div>-->
+  <!--    </mat-card-content>-->
+  <!--  </mat-card>-->
+  <div class="left-panel">
+    <ngb-carousel #carousel [interval]="3000" [showNavigationArrows]="false">
+      <ng-template ngbSlide *ngFor="let img of this.carouselImages">
+        <div class="picsum-img-wrapper text-center">
+          <img class="carousel-image" [src]="img.src" [alt]="img.desc">
+        </div>
+        <div class="carousel-caption">
+          <h3>{{img.desc}}</h3>
+        </div>
+      </ng-template>
+    </ngb-carousel>
+  </div>
+
+  <div class="right-panel">
+    <div class="form-container">
+      <div class="image-container text-center">
+        <img src="assets/img/brand/monair-logo.svg" style="width: 40%">
+      </div>
+      <div class="title-container">
+        <h2>Welcome back to Mon'Air!</h2>
+      </div>
+      <div class="sub-title-container">
+        <h4>
+          Mon'Air is a simple and intuitive platform that helps you visualize air quality parameters collected using
+          the 3M'Air sensors.
+        </h4>
       </div>
 
-      <div class="row">
-        <mat-form-field appearance="fill">
-          <mat-label>Password</mat-label>
-          <input matInput type="password" required [(ngModel)]="this.password">
-        </mat-form-field>
-      </div>
+      <mat-form-field appearance="fill">
+        <mat-label>Email</mat-label>
+        <input matInput type="email" required [(ngModel)]="this.email">
+        <mat-icon matSuffix>email</mat-icon>
+      </mat-form-field>
 
-      <div class="row">
-        <button class="login-button" color="primary" mat-raised-button (click)="this.signIn()">Login</button>
-      </div>
+      <mat-form-field appearance="fill">
+        <mat-label>Password</mat-label>
+        <input matInput type="password" required [(ngModel)]="this.password">
+        <mat-icon matSuffix>lock</mat-icon>
+      </mat-form-field>
 
-    </mat-card-content>
-  </mat-card>
+      <button class="login-button" color="primary" mat-raised-button (click)="this.signIn()">Login</button>
+    </div>
+  </div>
 </div>

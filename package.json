@@ -34,7 +34,6 @@
     "bootstrap": "^4.6.0",
     "chart.js": "^3.6.0",
     "firebase": "^9.6.7",
-    "interpolateheatmaplayer": "^1.1.0",
     "mapbox-gl": "^2.7.0",
     "moment": "^2.29.1",
     "ng2-charts": "^3.0.8",

@@ -1,10 +1,12 @@
 .login-container {
   display: flex;
   justify-content: space-around;
-  margin-top: 10em;
+  //margin-top: 10em;
+  width: 100%;
+  height: 100%;
 }
 
-.login-container mat-card{
+.login-container mat-card {
   width: 30%;
   text-align: center;
 }
@@ -21,5 +23,66 @@
 }
 
 .login-container .login-button {
+  //margin-top: 1em;
+}
+
+.left-panel {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.left-panel ngb-carousel {
+  height: 80%;
+  width: 80%;
+  overflow: hidden;
+}
+
+::ng-deep .carousel-inner, ::ng-deep .carousel-item, ::ng-deep .picsum-img-wrapper {
+  height: 100%;
+}
+
+.left-panel ngb-carousel img {
+  height: 70%;
+  max-width: 100%;
+}
+
+.right-panel {
+  flex: 1;
+  background-color: #fff;
+  display: flex;
+  justify-content: center;
+}
+
+.right-panel .title-container {
   margin-top: 1em;
+  margin-bottom: 1em;
+}
+
+.right-panel .sub-title-container h4 {
+  text-align: center;
+  color: #7f8c8d;
+}
+
+.right-panel .form-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 40%;
+}
+
+.right-panel .form-container .mat-icon {
+  color: #bdc3c7;
+}
+
+.right-panel .form-container .mat-form-field {
+  width: 100%;
+  margin-bottom: 1em;
+}
+
+.right-panel .form-container .login-button {
+  width: 100%;
+  height: 40px;
 }

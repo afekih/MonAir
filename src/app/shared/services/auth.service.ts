@@ -15,10 +15,10 @@ export class AuthService {
       console.log(user);
       if (user) {
         this.userData = user;
-        localStorage.setItem('user', JSON.stringify(this.userData));
-        JSON.parse(localStorage.getItem('user')!);
+        sessionStorage.setItem('user', JSON.stringify(this.userData));
+        // JSON.parse(localStorage.getItem('user')!);
       } else {
-        localStorage.setItem('user', 'null');
+        sessionStorage.setItem('user', 'null');
         JSON.parse(localStorage.getItem('user')!);
       }
     });
@@ -29,8 +29,8 @@ export class AuthService {
       .signInWithEmailAndPassword(email, password)
       .then((result) => {
         this.userData = result.user;
-        localStorage.setItem('user', JSON.stringify(this.userData));
-        JSON.parse(localStorage.getItem('user')!);
+        sessionStorage.setItem('user', JSON.stringify(this.userData));
+        // JSON.parse(localStorage.getItem('user')!);
         this.ngZone.run(() => {
           this.router.navigate(['dashboard']);
         });
@@ -42,7 +42,7 @@ export class AuthService {
 
   // Returns true when user is looged in and email is verified
   get isLoggedIn(): boolean {
-    const user = JSON.parse(localStorage.getItem('user')!);
+    const user = JSON.parse(sessionStorage.getItem('user')!);
     return user !== null && user.uid !== null;
   }
 
@@ -59,7 +59,7 @@ export class AuthService {
   // Sign out
   signOut() {
     return this.afAuth.signOut().then(() => {
-      localStorage.removeItem('user');
+      sessionStorage.removeItem('user');
       this.router.navigate(['sign-in']);
     });
   }

@@ -51,6 +51,10 @@
   background-position: right;
 }
 
+.card-custom-bg, .card-custom-bg table, .card-custom-bg mat-paginator {
+  background-color: #ecf0f1;
+}
+
 .left-card-container {
   flex: 2;
   /*padding-right: 2em;*/
