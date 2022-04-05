@@ -9,45 +9,7 @@ import {state, trigger, style, transition, animate} from "@angular/animations";
 @Component({
   selector: 'app-map',
   templateUrl: './map.component.html',
-  styleUrls: ['./map.component.scss'],
-  animations: [
-    trigger('openClose', [
-      // ...
-      state('open', style({
-        height: '840px',
-        opacity: 1,
-      })),
-      state('closed', style({
-        height: 0,
-        opacity: 0.8,
-      })),
-      transition('open => closed', [
-        animate('0.5s')
-      ]),
-      transition('closed => open', [
-        animate('0.5s')
-      ]),
-    ]),
-    trigger('searching', [
-      state('noSearch', style({
-        marginTop: '10em',
-        // 'justify-content': 'center',
-        marginLeft: '12em',
-        height: '15em',
-        // width: '70em'
-      })),
-      state('search', style({
-        marginTop: 0,
-        // 'justify-content': 'start',
-        marginLeft: '0em !important',
-        height: '7em',
-        // width: 'auto'
-      })),
-      transition('noSearch <=> search', [
-        animate('0.5s')
-      ]),
-    ])
-  ],
+  styleUrls: ['./map.component.scss']
 })
 
 export class MapComponent implements OnInit, OnDestroy {
@@ -57,21 +19,21 @@ export class MapComponent implements OnInit, OnDestroy {
   public startDate: string;
   public endDate: string;
   public filename: string;
+  public paramUnit: string;
   public map: any;
-  private style = 'mapbox://styles/mapbox/streets-v11';
-  isOpen = false;
-
-  toggle() {
-    this.isOpen = !this.isOpen;
+  public minMax = {
+    min: 0,
+    max: 0
   }
+  private style = 'mapbox://styles/mapbox/streets-v11';
 
   constructor(private monAirService: MonAirService) {
     this.selectedParameter = 'temperature';
     // this.startDate = moment().format('yyyy-MM-DThh:mm');
     this.startDate = '2019-06-20T12:00';
-    // this.log(this.startDate);
     this.endDate = '2019-06-20T17:00';
     this.filename = "";
+    this.paramUnit = this.monAirService.getParamUnit(this.selectedParameter);
   }
 
   ngOnInit(): void {
@@ -90,7 +52,6 @@ export class MapComponent implements OnInit, OnDestroy {
   }
 
   getNodeMeasuresPoints() {
-
     this.monAirService
       .getNodesMeasures(moment(this.startDate).toISOString(), moment(this.endDate).toISOString(), this.selectedParameter)
       .then((value: any) => {
@@ -111,6 +72,7 @@ export class MapComponent implements OnInit, OnDestroy {
           let minMaxHum = this.getMinMaxValues(this.measures, 'humidity');
           let minMaxPm1 = this.getMinMaxValues(this.measures, 'pm1');
           let minMaxPm25 = this.getMinMaxValues(this.measures, 'pm25');
+          this.minMax = this.getMinMaxValues(this.measures, this.selectedParameter);
 
           this.measures.map((measure: any) => {
             measure['value'] = measure[this.selectedParameter];
@@ -155,58 +117,12 @@ export class MapComponent implements OnInit, OnDestroy {
               data: {
                 type: 'FeatureCollection',
                 features: features
-              },
-              // cluster: true,
-              // clusterMaxZoom: 13, // Max zoom to cluster points on
-              // clusterRadius: 30 // Radius of each cluster when clustering points (defaults to 50)
+              }
             });
 
-            // this.map.addLayer({
-            //   id: 'clusters',
-            //   type: 'circle',
-            //   source: 'pollution',
-            //   filter: ['has', 'point_count'],
-            //   paint: {
-            //     // Use step expressions (https://docs.mapbox.com/mapbox-gl-js/style-spec/#expressions-step)
-            //     // with three steps to implement three types of circles:
-            //     //   * Blue, 20px circles when point count is less than 100
-            //     //   * Yellow, 30px circles when point count is between 100 and 750
-            //     //   * Pink, 40px circles when point count is greater than or equal to 750
-            //     'circle-color': [
-            //       'step',
-            //       ['get', 'point_count'],
-            //       '#51bbd6',
-            //       100,
-            //       '#f1f075',
-            //       750,
-            //       '#f28cb1'
-            //     ],
-            //     'circle-radius': [
-            //       'step',
-            //       ['get', 'point_count'],
-            //       20,
-            //       100,
-            //       30,
-            //       750,
-            //       40
-            //     ]
-            //   }
-            // });
-            //
-            // this.map.addLayer({
-            //   id: 'cluster-count',
-            //   type: 'symbol',
-            //   source: 'pollution',
-            //   filter: ['has', 'point_count'],
-            //   layout: {
-            //     'text-field': '{point_count_abbreviated}',
-            //     'text-font': ['DIN Offc Pro Medium', 'Arial Unicode MS Bold'],
-            //     'text-size': 12
-            //   }
-            // });
 
             this.map.addLayer({
-              'id': 'unclustered-point',
+              'id': 'measure-point',
               'type': 'circle',
               'source': 'pollution',
               'filter': ['!', ['has', 'point_count']],
@@ -221,11 +137,11 @@ export class MapComponent implements OnInit, OnDestroy {
                 'circle-color': [
                   "rgb",
                   // red is higher when feature.properties.temperature is higher
-                  ['+', ['*', ["get", this.selectedParameter + "_ind"], 10], 180],
+                  ['+', ['*', ["get", this.selectedParameter + "_ind"], 70], 180],
                   // green is always zero
                   ['-', 255, ['*', ["get", this.selectedParameter + "_ind"], 255]],
                   // blue is higher when feature.properties.temperature is lower
-                  24
+                  0
                 ],
                 // 'circle-opacity': {
                 //   default: 0,
@@ -295,7 +211,7 @@ export class MapComponent implements OnInit, OnDestroy {
             //   }
             // );
 
-            this.map.on('click', 'unclustered-point', (e: any) => {
+            this.map.on('click', 'measure-point', (e: any) => {
               new mapboxgl.Popup()
                 .setLngLat(e.lngLat)
                 .setHTML('<p><b>Date:</b> ' + moment(e.features[0].properties.date).format('dddd, D MMMM YYYY - H[h]mm:ss') +
@@ -305,12 +221,12 @@ export class MapComponent implements OnInit, OnDestroy {
                 .addTo(this.map);
             });
 
-            this.map.on('mouseenter', 'unclustered-point', () => {
+            this.map.on('mouseenter', 'measure-point', () => {
               this.map.getCanvas().style.cursor = 'pointer';
             });
 
-// Change it back to a pointer when it leaves.
-            this.map.on('mouseleave', 'unclustered-point', () => {
+            // Change it back to a pointer when it leaves.
+            this.map.on('mouseleave', 'measure-point', () => {
               this.map.getCanvas().style.cursor = '';
             });
 
@@ -321,10 +237,6 @@ export class MapComponent implements OnInit, OnDestroy {
           alert("no measures found for the selected dates");
         }
       });
-
-    // this.isOpen = true;
-
-
   }
 
   getMinMaxValues(data: any, param: string) {
@@ -335,7 +247,7 @@ export class MapComponent implements OnInit, OnDestroy {
       return o[param];
     }));
 
-    return {"min" : minValue, "max": maxValue}
+    return {min: minValue, max: maxValue}
   }
 
   generateHeatmap() {
@@ -347,37 +259,44 @@ export class MapComponent implements OnInit, OnDestroy {
         val: measure[this.selectedParameter]
       });
     });
-
-    // console.log(points);
   }
 
   onParamChange() {
-    let maxValue = Math.max.apply(Math, this.measures.map((o) => {
-      return o[this.selectedParameter];
-    }));
-    let minValue = Math.min.apply(Math, this.measures.map((o) => {
-      return o[this.selectedParameter];
-    }));
-    console.log('before', this.measures[0]['fraction']);
+    this.minMax = this.getMinMaxValues(this.measures, this.selectedParameter);
+    this.paramUnit = this.monAirService.getParamUnit(this.selectedParameter);
+
     this.measures.map((measure: any) => {
-      measure['fraction'] = (measure[this.selectedParameter] - minValue) / (maxValue - minValue);
+      measure['fraction'] = (measure[this.selectedParameter] - this.minMax.min) / (this.minMax.max - this.minMax.min);
     });
 
-    console.log(this.measures[0]);
     let a = 100
-    this.map.setPaintProperty('unclustered-point', 'circle-color', [
+    this.map.setPaintProperty('measure-point', 'circle-color', [
       "rgb",
       // red is higher when feature.properties.temperature is higher
-      ['+', ['*', ["get", this.selectedParameter + "_ind"], 10], 180],
+      ['+', ['*', ["get", this.selectedParameter + "_ind"], 70], 180],
       // green is always zero
       ['-', 255, ['*', ["get", this.selectedParameter + "_ind"], 255]],
       // blue is higher when feature.properties.temperature is lower
-      24
+      0
     ]);
   }
 
   exportData() {
 
+  }
+
+  perc2color(perc: number) {
+    let r, g, b = 0;
+    if (perc < 50) {
+      r = 255;
+      g = Math.round(5.1 * perc);
+    } else {
+      g = 255;
+      r = Math.round(510 - 5.10 * perc);
+    }
+    let h = r * 0x10000 + g * 0x100 + b * 0x1;
+    return [r, g, b]
+    // return '#' + ('000000' + h.toString(16)).slice(-6);
   }
 
   ngOnDestroy(): void {

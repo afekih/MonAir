@@ -52,6 +52,12 @@
         <div class="card shadow border-0">
           <div class="map-canvas" id="map"></div>
         </div>
+        <div class="col-auto" *ngIf="this.measures.length > 0">
+          <div class="color-scale">
+            <p>{{this.minMax.max + ' ' + this.paramUnit}}</p>
+            <p>{{this.minMax.min + ' ' + this.paramUnit}}</p>
+          </div>
+        </div>
       </div>
       <div class="col exporter-container">
         <mat-card>

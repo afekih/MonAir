@@ -10,9 +10,9 @@ export class AuthService {
 
   constructor(private afAuth: AngularFireAuth, private router: Router, private ngZone: NgZone) {
     // this.userData = afAuth.authState;
-    console.log('in constructor');
+    // console.log('in constructor');
     this.afAuth.authState.subscribe((user) => {
-      console.log(user);
+      // console.log(user);
       if (user) {
         this.userData = user;
         sessionStorage.setItem('user', JSON.stringify(this.userData));
