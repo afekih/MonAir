@@ -58,9 +58,11 @@ export class DashboardComponent implements OnInit, OnDestroy {
       }
     );
 
+
+    //TODO: Don't forget to unsubscribe at OnDestroy()
     this.monAirService.getTotalNumberOfMeasures()
       .subscribe((data: any) => {
-        console.log('number of measures: ', data);
+        // console.log('number of measures: ', data);
         this.totalNumberOfMeasures = (data !== null) ? data["measures_count"] : 0;
         this.monAirService.getTotalNodesList()
           .subscribe((data: Object[]) => {
