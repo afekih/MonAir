@@ -44,7 +44,8 @@
 .map-container {
   flex: 2;
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
+  padding-right: 0 !important;
 }
 
 .map-container .card {
@@ -57,19 +58,44 @@
 
 .color-scale {
   box-sizing: border-box;
-  width: 35px;
+  width: 45px;
   background: linear-gradient(#FF0000, #00FF00);
   height: 440px;
   //position: relative;
-  padding: 14%;
+  padding: 6%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 }
 
+.color-range-container {
+  box-sizing: border-box;
+  width: 45px;
+  background: white;
+  height: 440px;
+  display: flex;
+  flex-direction: column;
+}
+
+.color-range-container .param-range {
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+}
+
+.color-range-container .param-range p {
+  color: #000;
+  transform: rotate(-90deg);
+  text-align: center;
+  margin: inherit !important;
+}
+
 .color-scale p {
+  font-size: 0.9em;
   text-align: center;
   font-weight: 500;
+  overflow: hidden;
 }
 
 .color-scale p:nth-child(1) {

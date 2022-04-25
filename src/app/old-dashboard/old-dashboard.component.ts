@@ -65,11 +65,11 @@ export class OldDashboardComponent implements OnInit {
           });
       });
 
-    this.monAirService.getTopContributors(7)
-      .subscribe((data: Object[]) => {
-        // console.log("contributors: ", data);
-        this.nodesContributions = data;
-      });
+    // this.monAirService.getTopContributors(7)
+    //   .subscribe((data: Object[]) => {
+    //     // console.log("contributors: ", data);
+    //     this.nodesContributions = data;
+    //   });
 
     this.measuresChart = new Chart(
       <ChartItem>document.getElementById('measuresChart'),

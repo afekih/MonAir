@@ -3,7 +3,6 @@ import * as mapboxgl from "mapbox-gl";
 import * as moment from "moment/moment";
 import {environment} from "../../../environments/environment";
 import {MonAirService} from "../../shared/services/mon-air.service";
-import {state, trigger, style, transition, animate} from "@angular/animations";
 
 
 @Component({
@@ -13,6 +12,7 @@ import {state, trigger, style, transition, animate} from "@angular/animations";
 })
 
 export class MapComponent implements OnInit, OnDestroy {
+  private style = 'mapbox://styles/mapbox/streets-v11';
   public measures: any[] = [];
   public pointsColorIndex: any[] = [];
   public selectedParameter: string;
@@ -25,7 +25,7 @@ export class MapComponent implements OnInit, OnDestroy {
     min: 0,
     max: 0
   }
-  private style = 'mapbox://styles/mapbox/streets-v11';
+  public paramRanges: any;
 
   constructor(private monAirService: MonAirService) {
     this.selectedParameter = 'temperature';
@@ -34,6 +34,9 @@ export class MapComponent implements OnInit, OnDestroy {
     this.endDate = '2019-06-20T17:00';
     this.filename = "";
     this.paramUnit = this.monAirService.getParamUnit(this.selectedParameter);
+    this.monAirService.getParamRanges().subscribe((data: any) => {
+      this.paramRanges = data;
+    });
   }
 
   ngOnInit(): void {
@@ -53,7 +56,7 @@ export class MapComponent implements OnInit, OnDestroy {
 
   getNodeMeasuresPoints() {
     this.monAirService
-      .getNodesMeasures(moment(this.startDate).toISOString(), moment(this.endDate).toISOString(), this.selectedParameter)
+      .getNodesMeasures(moment(this.startDate).toISOString(), moment(this.endDate).toISOString())
       .then((value: any) => {
         let features: any = []
         this.measures = value
@@ -70,7 +73,7 @@ export class MapComponent implements OnInit, OnDestroy {
 
           let minMaxTemp = this.getMinMaxValues(this.measures, 'temperature');
           let minMaxHum = this.getMinMaxValues(this.measures, 'humidity');
-          let minMaxPm1 = this.getMinMaxValues(this.measures, 'pm1');
+          let minMaxPm10 = this.getMinMaxValues(this.measures, 'pm10');
           let minMaxPm25 = this.getMinMaxValues(this.measures, 'pm25');
           this.minMax = this.getMinMaxValues(this.measures, this.selectedParameter);
 
@@ -79,8 +82,20 @@ export class MapComponent implements OnInit, OnDestroy {
 
             measure['temperature_ind'] = (measure['temperature'] - minMaxTemp['min']) / (minMaxTemp['max'] - minMaxTemp['min']);
             measure['humidity_ind'] = (measure['humidity'] - minMaxHum['min']) / (minMaxHum['max'] - minMaxHum['min']);
-            measure['pm1_ind'] = (measure['pm1'] - minMaxPm1['min']) / (minMaxPm1['max'] - minMaxPm1['min']);
+            measure['pm10_ind'] = (measure['pm10'] - minMaxPm10['min']) / (minMaxPm10['max'] - minMaxPm10['min']);
             measure['pm25_ind'] = (measure['pm25'] - minMaxPm25['min']) / (minMaxPm25['max'] - minMaxPm25['min']);
+            let range: any = Object.entries(this.paramRanges['pm25'])
+              .filter((range: any) => {
+                // console.log(range);
+                return range[1]['min'] <= measure['pm25'] && measure['pm25'] <= range[1]['max']
+              });
+            measure['pm25_color'] = range[0][1]['color'];
+            range = Object.entries(this.paramRanges['pm10'])
+              .filter((range: any) => {
+                // console.log(range);
+                return range[1]['min'] <= measure['pm10'] && measure['pm10'] <= range[1]['max']
+              });
+            measure['pm10_color'] = range[0][1]['color'];
 
             features.push({
               'type': 'Feature',
@@ -99,6 +114,8 @@ export class MapComponent implements OnInit, OnDestroy {
               }
             });
           });
+
+          console.log(this.measures[0]);
 
           this.map.remove();
 
@@ -120,7 +137,6 @@ export class MapComponent implements OnInit, OnDestroy {
               }
             });
 
-
             this.map.addLayer({
               'id': 'measure-point',
               'type': 'circle',
@@ -131,18 +147,19 @@ export class MapComponent implements OnInit, OnDestroy {
                   'base': 1.75,
                   'stops': [
                     [12, 4],
-                    [22, 50]
+                    [22, 100]
                   ]
                 },
-                'circle-color': [
-                  "rgb",
-                  // red is higher when feature.properties.temperature is higher
-                  ['+', ['*', ["get", this.selectedParameter + "_ind"], 70], 180],
-                  // green is always zero
-                  ['-', 255, ['*', ["get", this.selectedParameter + "_ind"], 255]],
-                  // blue is higher when feature.properties.temperature is lower
-                  0
-                ],
+                // 'circle-color': [
+                //   "rgb",
+                //   // red is higher when feature.properties.temperature is higher
+                //   ['+', ['*', ["get", this.selectedParameter + "_ind"], 70], 180],
+                //   // green is always zero
+                //   ['-', 255, ['*', ["get", this.selectedParameter + "_ind"], 255]],
+                //   // blue is higher when feature.properties.temperature is lower
+                //   0
+                // ],
+                // "circle-color": ["get", "color"]
                 // 'circle-opacity': {
                 //   default: 0,
                 //   stops: [
@@ -152,6 +169,8 @@ export class MapComponent implements OnInit, OnDestroy {
                 // }
               },
             });
+
+            this.setPointColors();
 
             // this.map.addLayer(
             //   {
@@ -240,6 +259,9 @@ export class MapComponent implements OnInit, OnDestroy {
   }
 
   getMinMaxValues(data: any, param: string) {
+    if (param === 'humidity') {
+      return {min: 0, max: 100}
+    }
     let maxValue = Math.max.apply(Math, data.map((o: any) => {
       return o[param];
     }));
@@ -269,16 +291,24 @@ export class MapComponent implements OnInit, OnDestroy {
       measure['fraction'] = (measure[this.selectedParameter] - this.minMax.min) / (this.minMax.max - this.minMax.min);
     });
 
-    let a = 100
-    this.map.setPaintProperty('measure-point', 'circle-color', [
-      "rgb",
-      // red is higher when feature.properties.temperature is higher
-      ['+', ['*', ["get", this.selectedParameter + "_ind"], 70], 180],
-      // green is always zero
-      ['-', 255, ['*', ["get", this.selectedParameter + "_ind"], 255]],
-      // blue is higher when feature.properties.temperature is lower
-      0
-    ]);
+    this.setPointColors();
+
+  }
+
+  setPointColors() {
+    if (!this.selectedParameter.includes('pm')) {
+      this.map.setPaintProperty('measure-point', 'circle-color', [
+        "rgb",
+        // red is higher when feature.properties.temperature is higher
+        ['+', ['*', ["get", this.selectedParameter + "_ind"], 70], 180],
+        // green is always zero
+        ['-', 255, ['*', ["get", this.selectedParameter + "_ind"], 255]],
+        // blue is higher when feature.properties.temperature is lower
+        0
+      ]);
+    } else {
+      this.map.setPaintProperty('measure-point', 'circle-color', ["get", this.selectedParameter + "_color"]);
+    }
   }
 
   exportData() {

@@ -21,10 +21,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator | undefined;
   @ViewChild(MatSort) sort: MatSort | undefined;
 
-  // ngAfterViewInit() {
-  //   this.dataSource.sort = this.sort || null;
-  // }
-
   public measuresChart: any;
   public nodesList: any[];
   public yearlyNodesList: any[];
@@ -58,25 +54,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
       }
     );
 
-
     //TODO: Don't forget to unsubscribe at OnDestroy()
-    this.monAirService.getTotalNumberOfMeasures()
-      .subscribe((data: any) => {
-        // console.log('number of measures: ', data);
-        this.totalNumberOfMeasures = (data !== null) ? data["measures_count"] : 0;
-        this.monAirService.getTotalNodesList()
-          .subscribe((data: Object[]) => {
-            this.nodesList = data;
-            this.nodesList.map(node => {
-              node["contribution"] = node["measures_count"] * 100 / this.totalNumberOfMeasures;
-              // console.log('date: ', node['last_seen']);
-              node["last_seen_date"] = moment(node['last_seen']).format('dddd, D MMMM YYYY - H[h]mm');
-              // console.log();
-            });
-
-            this.getMeasuresPerMonth(this.selectedYear);
-          });
-      });
+    this.getTotalNumberOfMeasures();
 
 
   }
@@ -90,20 +69,16 @@ export class DashboardComponent implements OnInit, OnDestroy {
           this.yearlyNodesNumber = 0;
           this.yearlyNodesList = [];
         } else {
-          let nodes = data['nodes']
-
-          // let a = Object.fromEntries(Object.entries(nodes).filter(([key, value]) => {
-          //   return value as number > 0;
-          // }));
-          // console.log('value: ', a);
+          let nodes = data['nodes'];
+          console.log('nodes: ', nodes);
           this.yearlyNodeIDsList = Object.fromEntries(Object.entries(nodes).filter(([key, value]) => {
             return value as number > 0;
           }));
-          this.yearlyNodesNumber = Object.keys(this.yearlyNodeIDsList).length
+          console.log('yearlyNodesIDs', this.yearlyNodeIDsList);
+          this.yearlyNodesNumber = Object.keys(this.yearlyNodeIDsList).length;
           this.yearlyNodesList = this.nodesList.filter((element) => {
-            return Object.keys(this.yearlyNodeIDsList).includes(element['node_id']) ;
+            return Object.keys(this.yearlyNodeIDsList).includes(element['node_id']);
           });
-          // console.log(this.yearlyNodeIDsList);
 
           const today = new Date();
           if (year === today.getFullYear().toString()) {
@@ -124,14 +99,23 @@ export class DashboardComponent implements OnInit, OnDestroy {
       });
   }
 
-  // public getNumberOfMeasuresPerYear(year: string) {
-  //   this.monAirService.getNumberOfMeasuresPerYear(year.toString())
-  //     .on("value", data => {
-  //       console.log('number of measures for ' + this.selectedYear, data.numChildren());
-  //       this.yearlyNumberOfMeasures = data.numChildren();
-  //     });
-  //   this.getMeasuresPerMonth(year);
-  // }
+  getTotalNumberOfMeasures() {
+    //TODO: Don't forget to unsubscribe at OnDestroy()
+    this.monAirService.getTotalNumberOfMeasures()
+      .subscribe((data: any) => {
+        this.totalNumberOfMeasures = (data !== null) ? data["measures_count"] : 0;
+        this.monAirService.getTotalNodesList()
+          .subscribe((data: Object[]) => {
+            this.nodesList = data;
+            this.nodesList.map(node => {
+              node["contribution"] = node["measures_count"] * 100 / this.totalNumberOfMeasures;
+              node["last_seen_date"] = moment(node['last_seen']).format('dddd, D MMMM YYYY - H[h]mm');
+            });
+
+            this.getMeasuresPerMonth(this.selectedYear);
+          });
+      });
+  }
 
   private static generateYearsList(startYear: number) {
     let currentYear = new Date().getFullYear();

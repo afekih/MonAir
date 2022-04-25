@@ -35,9 +35,9 @@
               </div>
               <div class="col mr-1 radio-container">
                 <!--                <mat-radio-button value="no2">NO2</mat-radio-button>-->
-                <mat-radio-button value="pm1">PM 1</mat-radio-button>
-
                 <mat-radio-button value="pm25">PM 2.5</mat-radio-button>
+
+                <mat-radio-button value="pm10">PM 10</mat-radio-button>
                 <!--                <mat-radio-button value="pm10">PM 10</mat-radio-button>-->
               </div>
             </div>
@@ -52,10 +52,18 @@
         <div class="card shadow border-0">
           <div class="map-canvas" id="map"></div>
         </div>
-        <div class="col-auto" *ngIf="this.measures.length > 0">
+        <div class="col-auto" *ngIf="this.measures.length > 0 && !this.selectedParameter.includes('pm')">
           <div class="color-scale">
             <p>{{this.minMax.max + ' ' + this.paramUnit}}</p>
             <p>{{this.minMax.min + ' ' + this.paramUnit}}</p>
+          </div>
+        </div>
+
+        <div class="col-auto" *ngIf="this.measures.length > 0 && this.selectedParameter.includes('pm')">
+          <div class="color-range-container d-flex">
+            <div class="param-range" *ngFor="let element of this.paramRanges[this.selectedParameter]" [style.background-color]="element.color" >
+              <p>{{element.desc}}</p>
+            </div>
           </div>
         </div>
       </div>
