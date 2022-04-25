@@ -5,6 +5,7 @@ import {Router} from "@angular/router";
 @Injectable({
   providedIn: 'root'
 })
+
 export class AuthService {
   private userData: any;
 
@@ -45,16 +46,6 @@ export class AuthService {
     const user = JSON.parse(sessionStorage.getItem('user')!);
     return user !== null && user.uid !== null;
   }
-
-  // signOut() {
-  //   this.afAuth.signOut()
-  //     .then(res => {
-  //       console.log('logged out');
-  //     })
-  //     .catch(err => {
-  //       console.log('Something went wrong:',err.message);
-  //     });
-  // }
 
   // Sign out
   signOut() {

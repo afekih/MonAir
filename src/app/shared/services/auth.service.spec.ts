@@ -48,7 +48,6 @@ describe('AuthService', () => {
 
     spyOn(angularFireAuthMock, 'signInWithEmailAndPassword').and.resolveTo(1);
     service.signIn(username, password).then(done);
-    // service.signIn(username, password).then(done);
     expect(angularFireAuthMock.signInWithEmailAndPassword).toHaveBeenCalled();
   });
 

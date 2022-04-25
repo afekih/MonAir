@@ -1,10 +1,6 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
-import {environment} from '../../../environments/environment';
 import {Observable} from "rxjs";
 import {AngularFireDatabase, AngularFireList, AngularFireObject} from "@angular/fire/compat/database";
-import {map} from "rxjs/operators";
-// import firebase from "firebase/compat";
 
 const parameterUnits: { [key: string]: string } = {
   'temperature': '°C',
@@ -14,37 +10,43 @@ const parameterUnits: { [key: string]: string } = {
   'pm10': 'µg/m3'
 }
 
-const regionOfInterest: any =  [
-  {"lat": 45.776087, "lon": 4.841163},
-  {"lat": 45.748183, "lon": 4.837987},
-  {"lat": 45.750998, "lon": 4.864165},
-  {"lat": 45.771896, "lon": 4.868800}
-]
+// const regionOfInterest: any = [
+//   {"lat": 45.776087, "lon": 4.841163},
+//   {"lat": 45.748183, "lon": 4.837987},
+//   {"lat": 45.750998, "lon": 4.864165},
+//   {"lat": 45.771896, "lon": 4.868800}
+// ]
 
 @Injectable({
   providedIn: 'root'
 })
 
 export class MonAirService {
-  private serverUrl = environment.serverUrl;
-  public dbMeasuresRef: AngularFireList<any>;
-  public dbNodesRef: AngularFireList<any>;
-  public dbStatsRef: AngularFireObject<any>;
+  // private serverUrl = environment.serverUrl;
+  private dbMeasuresRef: AngularFireList<any>;
+  private dbNodesRef: AngularFireList<any>;
+  private dbStatsRef: AngularFireObject<any>;
+  private dbConfRef: AngularFireObject<any>
+  private paramRanges: any;
 
-  constructor(private http: HttpClient, private fbDatabase: AngularFireDatabase) {
+  constructor(private fbDatabase: AngularFireDatabase) {
     this.dbMeasuresRef = fbDatabase.list('/measuresRaw');
     this.dbNodesRef = fbDatabase.list('/nodes');
     this.dbStatsRef = fbDatabase.object('/stats');
+    this.dbConfRef = fbDatabase.object('/config/paramRanges');
+    this.getParamRanges().subscribe((data: any) => {
+      this.paramRanges = data['paramRanges'];
+    });
   }
 
-  getAllData(): Observable<any> {
-    return this.dbMeasuresRef.snapshotChanges().pipe(map(changes =>
-        changes.map(c =>
-          ({key: c.payload.key, ...c.payload.val()})
-        )
-      )
-    );
-  }
+  // getAllData(): Observable<any> {
+  //   return this.dbMeasuresRef.snapshotChanges().pipe(map(changes =>
+  //       changes.map(c =>
+  //         ({key: c.payload.key, ...c.payload.val()})
+  //       )
+  //     )
+  //   );
+  // }
 
   getTotalNodesList(): Observable<any[]> {
     return this.dbNodesRef.valueChanges().pipe();
@@ -52,7 +54,6 @@ export class MonAirService {
 
   getTotalNumberOfMeasures() {
     return this.dbStatsRef.valueChanges().pipe();
-    // return this.http.get(this.serverUrl + '/getMeasuresNumber');
   }
 
   getNumberOfMeasuresPerYear(year: string) {
@@ -67,12 +68,11 @@ export class MonAirService {
       .pipe();
   }
 
+  // getTopContributors(limit: number) {
+  //   return this.http.get<Object[]>(this.serverUrl + '/getTopContributorsNodes?limit=' + limit);
+  // }
 
-  getTopContributors(limit: number) {
-    return this.http.get<Object[]>(this.serverUrl + '/getTopContributorsNodes?limit=' + limit);
-  }
-
-  getNodesMeasures(startDate: string, endDate: string, parameter: string) {
+  getNodesMeasures(startDate: string, endDate: string) {
     return this.fbDatabase.database.ref().child('measuresRaw').orderByChild("date")
       .startAt(new Date(startDate).toISOString()).endAt(new Date(endDate).toISOString())
       .get().then(snapshot => {
@@ -90,15 +90,11 @@ export class MonAirService {
     return parameterUnits[parameter]
   }
 
-  getRoI() {
-    return regionOfInterest;
-}
-
-  dummy() {
-    return this.http.get(this.serverUrl + '/test');
+  getParamRanges() {
+    return this.dbConfRef.valueChanges().pipe();
   }
 
-  // refresh() {
-  //   return this.http.get();
+  // get RoI() {
+  //   return regionOfInterest;
   // }
 }
