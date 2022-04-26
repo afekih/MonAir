@@ -21,7 +21,7 @@ export class SignInComponent implements OnInit {
   ]
 
   constructor(private authService: AuthService, private router: Router) {
-    if (this.authService.isLoggedIn) {
+    if (this.authService.isLoggedIn()) {
       this.router.navigate(['dashboard']);
     }
   }

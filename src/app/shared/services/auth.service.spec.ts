@@ -53,7 +53,7 @@ describe('AuthService', () => {
 
   it('should return true if user is logged in', () => {
     // sessionStorage.setItem('user', JSON.stringify(''));
-    expect(service.isLoggedIn).toEqual(true);
+    expect(service.isLoggedIn()).toEqual(true);
   });
 
   it('should use angularFireAuth signOut method', (done: DoneFn) => {
@@ -64,7 +64,7 @@ describe('AuthService', () => {
 
   it('should return false if user is not logged in', () => {
     sessionStorage.removeItem('user');
-    expect(service.isLoggedIn).toEqual(false);
+    expect(service.isLoggedIn()).toEqual(false);
   });
 
   afterEach(() => {
