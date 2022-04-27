@@ -18,14 +18,12 @@ export class TopBarComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.listTitles = ROUTES.filter(listTitle => listTitle);
+    this.listTitles = ROUTES;
+    console.log('routes', ROUTES);
   }
 
   getTitle() {
     let title = this.location.prepareExternalUrl(this.location.path());
-    if (title.charAt(0) === '#') {
-      title = title.slice(2);
-    }
     for (let item = 0; item < this.listTitles.length; item++) {
       if (this.listTitles[item].path === title) {
         return this.listTitles[item].title;

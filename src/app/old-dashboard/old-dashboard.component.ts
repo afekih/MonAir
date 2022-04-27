@@ -41,7 +41,7 @@ export class OldDashboardComponent implements OnInit {
 
     chartData.datasets[0].label = 'Number of measurements during ' + this.selectedYear;
 
-    this.monAirService.getNumberOfMeasuresPerYear(this.selectedYear);
+    // this.monAirService.getNumberOfMeasuresPerYear(this.selectedYear);
 
     this.monAirService.getTotalNumberOfMeasures()
       .subscribe((data: any) => {

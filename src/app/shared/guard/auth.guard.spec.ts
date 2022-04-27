@@ -8,7 +8,7 @@ describe('AuthGuard', () => {
   let guard: AuthGuard;
 
   const routerMock = jasmine.createSpyObj('Router', ['navigate']);
-  const authServiceMock = jasmine.createSpyObj('AuthService', ['isLoggedIn'])
+  const authServiceMock = jasmine.createSpyObj('AuthService', ['isLoggedIn']);
 
   beforeEach(() => {
     TestBed.configureTestingModule({

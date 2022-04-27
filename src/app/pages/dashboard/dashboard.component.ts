@@ -70,11 +70,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
           this.yearlyNodesList = [];
         } else {
           let nodes = data['nodes'];
-          console.log('nodes: ', nodes);
           this.yearlyNodeIDsList = Object.fromEntries(Object.entries(nodes).filter(([key, value]) => {
             return value as number > 0;
           }));
-          console.log('yearlyNodesIDs', this.yearlyNodeIDsList);
           this.yearlyNodesNumber = Object.keys(this.yearlyNodeIDsList).length;
           this.yearlyNodesList = this.nodesList.filter((element) => {
             return Object.keys(this.yearlyNodeIDsList).includes(element['node_id']);

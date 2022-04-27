@@ -38,9 +38,7 @@ describe('MonAirService', () => {
 
   beforeEach(async () => {
     TestBed.configureTestingModule({
-      imports: [
-        // AngularFireModule.initializeApp(environment.firebaseConfig),
-      ],
+      imports: [],
       providers: [
         {provide: AngularFireDatabase, useValue: angularFireDBMock}
       ]

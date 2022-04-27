@@ -63,14 +63,6 @@ export class MapComponent implements OnInit, OnDestroy {
 
         if (value.length > 0) {
 
-          // this.measurePoints = this.measures.map((measure: any) => {
-          //   return {
-          //     "lat": measure['lat'],
-          //     "lon": measure['lng'],
-          //     "val": measure[this.selectedParameter]
-          //   };
-          // });
-
           let minMaxTemp = this.getMinMaxValues(this.measures, 'temperature');
           let minMaxHum = this.getMinMaxValues(this.measures, 'humidity');
           let minMaxPm10 = this.getMinMaxValues(this.measures, 'pm10');
@@ -100,14 +92,6 @@ export class MapComponent implements OnInit, OnDestroy {
             features.push({
               'type': 'Feature',
               'properties': measure,
-              // 'properties': {
-              //   'value': measure[this.selectedParameter],
-              //   'node': measure['node_id'],
-              //   'date': measure['date'],
-              //   // 'impact': measure['impact'],
-              //   // 'fraction': measure['fraction'],
-              //   'iconSize': [40, 40]
-              // },
               'geometry': {
                 'type': 'Point',
                 'coordinates': [measure['lng'], measure['lat']]
@@ -240,6 +224,7 @@ export class MapComponent implements OnInit, OnDestroy {
                 .addTo(this.map);
             });
 
+            // Change the pointer form when it hovers a point
             this.map.on('mouseenter', 'measure-point', () => {
               this.map.getCanvas().style.cursor = 'pointer';
             });
@@ -292,7 +277,6 @@ export class MapComponent implements OnInit, OnDestroy {
     });
 
     this.setPointColors();
-
   }
 
   setPointColors() {
@@ -315,19 +299,19 @@ export class MapComponent implements OnInit, OnDestroy {
 
   }
 
-  perc2color(perc: number) {
-    let r, g, b = 0;
-    if (perc < 50) {
-      r = 255;
-      g = Math.round(5.1 * perc);
-    } else {
-      g = 255;
-      r = Math.round(510 - 5.10 * perc);
-    }
-    let h = r * 0x10000 + g * 0x100 + b * 0x1;
-    return [r, g, b]
-    // return '#' + ('000000' + h.toString(16)).slice(-6);
-  }
+  // perc2color(perc: number) {
+  //   let r, g, b = 0;
+  //   if (perc < 50) {
+  //     r = 255;
+  //     g = Math.round(5.1 * perc);
+  //   } else {
+  //     g = 255;
+  //     r = Math.round(510 - 5.10 * perc);
+  //   }
+  //   let h = r * 0x10000 + g * 0x100 + b * 0x1;
+  //   return [r, g, b]
+  //   // return '#' + ('000000' + h.toString(16)).slice(-6);
+  // }
 
   ngOnDestroy(): void {
     this.map.remove();

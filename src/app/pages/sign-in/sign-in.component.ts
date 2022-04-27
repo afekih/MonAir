@@ -15,9 +15,15 @@ export class SignInComponent implements OnInit {
   public email: string = '';
   public password: string = '';
   public carouselImages = [
-    {src: "assets/img/backgrounds/monair-slide1.png", desc: "Small sensors that involves citizens in mobile participatory sensing of air pollution and urban heat islands"},
+    {
+      src: "assets/img/backgrounds/monair-slide1.png",
+      desc: "Small sensors that involves citizens in mobile participatory sensing of air pollution and urban heat islands"
+    },
     // {src: "assets/img/backgrounds/login-background.png", desc: "3M\'Air Sensor"},
-    {src: "assets/img/backgrounds/monair-slide2.svg", desc: "Mon'Air platform allows you to visualize collected measurements using 3M'Air sensors"}
+    {
+      src: "assets/img/backgrounds/monair-slide2.svg",
+      desc: "Mon'Air platform allows you to visualize collected measurements using 3M'Air sensors"
+    }
   ]
 
   constructor(private authService: AuthService, private router: Router) {
@@ -31,11 +37,13 @@ export class SignInComponent implements OnInit {
   }
 
   signIn() {
-    this.authService.signIn(this.email, this.password);
+    if (this.email.length > 0 && this.password.length > 0) {
+      this.authService.signIn(this.email, this.password);
+    }
   }
 
-  signOut() {
-    this.authService.signOut();
-  }
+  // signOut() {
+  //   this.authService.signOut();
+  // }
 
 }
