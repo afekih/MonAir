@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" xml:space="preserve" version="1.1" style=""><rect id="backgroundrect" width="100%" height="100%" x="0" y="0" fill="none" stroke="none"/>
+
+ <g style="" class="currentLayer">
+  <title>Layer 1</title>
+  <g stroke="none" stroke-width="0" fill="#ffffff" id="svg_1" class="selected" fill-opacity="1" filter="" opacity="1">
+   <g stroke="none" id="svg_2" fill="#ffffff" fill-opacity="1" stroke-opacity="1" filter="" opacity="1">
+    <path fill="#ffffff" id="svg_3" d="m346.6392575668335,149.53498139038086 c1.0807,-4.74202 1.62518,-9.60256 1.62518,-14.51486 c0,-35.88964 -29.19741,-65.08705 -65.08705,-65.08705 c-29.0116,0 -54.61289,19.52498 -62.55404,47.04492 c-2.36531,-0.36800000000000005 -4.77152,-0.5538000000000001 -7.18238,-0.5538000000000001 c-24.13967,0 -44.03937,18.4919 -46.28202,42.05292 c-23.55895,2.24006 -42.05085,22.14183 -42.05085,46.27943 c0,16.04739 8.10884,30.75013 21.69258,39.33099 c0.7717,0.48807000000000006 1.6298400000000002,0.71943 2.47866,0.71943 c1.54341,0 3.0511,-0.7649700000000001 3.93615,-2.16553 c1.37105,-2.17019 0.7220200000000001,-5.04169 -1.4481700000000002,-6.41275 c-10.86906,-6.86925 -17.36151,-18.63475 -17.36151,-31.47214 c0,-20.50785 16.68504,-37.19289 37.19289,-37.19289 c2.56976,0 4.64885,-2.08168 4.64885,-4.64885 c0,-20.50785 16.68504,-37.19289 37.19289,-37.19289 c3.19602,0 6.37445,0.40630000000000005 9.43435,1.20543 c1.2214800000000001,0.3198600000000001 2.53353,0.12681 3.61836,-0.54035 c1.0807,-0.6697400000000002 1.84308,-1.7499200000000001 2.1065300000000002,-2.9920999999999998 c5.42107,-25.59043 28.37601,-44.1641 54.57666,-44.1641 c30.7641,0 55.78882,25.02731 55.78882,55.78882 c0,5.87499 -0.90783,11.66147 -2.69708,17.19796 c-0.44925000000000004,1.3871 -0.22256000000000004,2.90359 0.6128100000000001,4.09764 c0.8353700000000001,1.19197 2.18365,1.92486 3.64114,1.97972 c22.58695,0.82191 40.28437,19.18907 40.28437,41.81225 c0,2.5676900000000002 2.07961,4.64885 4.64885,4.64885 c2.56976,0 4.64885,-2.08168 4.64885,-4.64885 c0.0020700000000000007,-25.69032 -18.6715,-46.89017 -43.46486,-50.57219 z" fill-opacity="1" stroke="none" stroke-opacity="1" filter="" opacity="1"/>
+   </g>
+  </g>
+  <g stroke="#000" stroke-width="0" fill="#ffffff" id="svg_4" class="selected" fill-opacity="1" filter="" opacity="1">
+   <g stroke="null" id="svg_5" fill="#ffffff" fill-opacity="1" filter="" opacity="1">
+    <path fill="#ffffff" id="svg_6" d="m276.0587675668335,176.41208139038085 c-12.8453,0 -23.29477,10.45596 -23.29477,23.30126 c0,2.14427 1.7366800000000002,3.8852700000000002 3.88225,3.8852700000000002 c2.146,0 3.88225,-1.73625 3.88225,-3.88052 c0,-8.56281 6.96488,-15.52942 15.52985,-15.52942 c8.56497,0 15.52985,6.94197 15.52985,15.50521 c0,8.56281 -6.96488,15.50478 -15.52985,15.50478 l-89.29598,0 c-2.146,0 -3.88225,1.73841 -3.88225,3.88225 s1.7366800000000002,3.88225 3.88225,3.88225 l89.29598,0 c12.8453,0 23.29477,-10.42354 23.29477,-23.2697 c0.00043000000000000015,-12.84487 -10.44904,-23.28137 -23.29434,-23.28137 z" fill-opacity="1" filter="" opacity="1"/>
+   </g>
+  </g>
+  <g stroke="#000" stroke-width="0" fill="#ffffff" id="svg_7" class="selected" fill-opacity="1" filter="" opacity="1">
+   <g stroke="null" id="svg_8" fill="#ffffff" fill-opacity="1" filter="" opacity="1">
+    <path fill="#ffffff" id="svg_9" d="m217.2600575668335,170.48208139038087 c-10.12215,0 -18.35639,8.23934 -18.35639,18.3615 c0,1.6896900000000001 1.3685100000000001,3.06161 3.05923,3.06161 c1.6910600000000002,0 3.05923,-1.36817 3.05923,-3.05787 c0,-6.74753 5.4883500000000005,-12.23725 12.23759,-12.23725 c6.74924,0 12.23759,5.4703 12.23759,12.21818 c0,6.74753 -5.4883500000000005,12.21784 -12.23759,12.21784 l-18.35639,0 c-1.6910600000000002,0 -3.05923,1.3698700000000001 -3.05923,3.05923 s1.3685100000000001,3.05923 3.05923,3.05923 l18.35639,0 c10.12215,0 18.35639,-8.2138 18.35639,-18.33663 c0.0003400000000000001,-10.12181 -8.23389,-18.34583 -18.35605,-18.34583 z" fill-opacity="1" filter="" opacity="1"/>
+   </g>
+  </g>
+  <g stroke="#000" stroke-width="0" fill="#ffffff" id="svg_10" class="selected" fill-opacity="1" filter="" opacity="1">
+   <g stroke="null" id="svg_11" fill="#ffffff" fill-opacity="1" filter="" opacity="1">
+    <path fill="#ffffff" id="svg_12" d="m327.9640675668335,191.37108139038085 c-13.32322,0 -24.16148,10.83826 -24.16148,24.16148 c0,2.22405 1.8013,4.02669 4.02669,4.02669 c2.22584,0 4.02669,-1.80309 4.02669,-4.02669 c0,-8.8814 7.22401,-16.10765 16.10765,-16.10765 c8.88364,0 16.10765,7.1998 16.10765,16.0812 c0,8.88185 -7.22401,16.08165 -16.10765,16.08165 l-153.02182,0 c-2.22584,0 -4.02669,1.80309 -4.02669,4.02669 s1.8013,4.02669 4.02669,4.02669 l153.02182,0 c13.32322,0 24.16148,-10.81136 24.16148,-24.13548 c0.00045000000000000015,-13.32322 -10.83781,-24.13458 -24.16103,-24.13458 z" fill-opacity="1" filter="" opacity="1"/>
+   </g>
+  </g>
+  <g stroke="#000" stroke-width="0" fill="#000000" id="svg_22"/>
+  <g stroke="#000" stroke-width="0" fill="#000000" id="svg_23"/>
+  <g stroke="#000" stroke-width="0" fill="#000000" id="svg_24"/>
+  <g stroke="#000" stroke-width="0" fill="#000000" id="svg_25"/>
+  <g stroke="#000" stroke-width="0" fill="#000000" id="svg_26"/>
+  <g stroke="#000" stroke-width="0" fill="#000000" id="svg_27"/>
+  <g stroke="#000" stroke-width="0" fill="#000000" id="svg_28"/>
+  <g stroke="#000" stroke-width="0" fill="#000000" id="svg_29"/>
+  <g stroke="#000" stroke-width="0" fill="#000000" id="svg_30"/>
+  <g stroke="#000" stroke-width="0" fill="#000000" id="svg_31"/>
+  <g stroke="#000" stroke-width="0" fill="#000000" id="svg_32"/>
+  <g stroke="#000" stroke-width="0" fill="#000000" id="svg_33"/>
+  <g stroke="#000" stroke-width="0" fill="#000000" id="svg_34"/>
+  <g stroke="#000" stroke-width="0" fill="#000000" id="svg_35"/>
+  <g stroke="#000" stroke-width="0" fill="#000000" id="svg_36"/>
+  <text filter="url(#svg_37_blur)" transform="rotate(-180 258.81250000000006,468) " font-weight="bold" xml:space="preserve" text-anchor="start" font-family="'Public Sans'" font-size="34" id="svg_37" y="480" x="198" stroke-width="0" stroke="#000" fill="#000000">3M'Air</text>
+  <text font-weight="bold" xml:space="preserve" text-anchor="start" font-family="'Public Sans'" font-size="124" id="svg_39" y="358" x="57.26563" stroke-width="0" stroke="#000" fill="#ffffff" class="selected" fill-opacity="1" opacity="1">3M'Air</text>
+ </g>
+<defs><filter xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" id="f120" inkscape:label="Dark Emboss" inkscape:menu-tooltip="Emboss effect : 3D relief where white is replaced by black" inkscape:menu="Bumps" height="1" width="1" y="0" x="0" color-interpolation-filters="sRGB">
+            <feColorMatrix result="result2" type="luminanceToAlpha"/>
+            <feDiffuseLighting diffuseConstant=".5" result="result1" surfaceScale="-10">
+                <feDistantLight elevation="20" azimuth="225"/>
+            </feDiffuseLighting>
+            <feComposite result="result3" k3="1" k2="1" k1="1" in="result1" operator="arithmetic" in2="SourceGraphic"/>
+            <feBlend result="result4" mode="multiply" in="result2" in2="result3"/>
+            <feComposite result="result5" operator="arithmetic" k2="1.2" in2="result4"/>
+            <feComposite operator="in" in="result5" in2="SourceGraphic"/>
+        </filter><filter xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" id="f164" inkscape:label="Alpha draw, color" inkscape:menu="Image effects, transparent" inkscape:menu-tooltip="Gives a transparent color fill effect to bitmaps and materials" height="1" width="1" y="0" x="0" color-interpolation-filters="sRGB">
+            <feGaussianBlur result="result8" stdDeviation=".6"/>
+            <feConvolveMatrix order="3 3" kernelMatrix="1 1 1 1 -8 1 1 1 1 " in="result8" divisor="1" targetX="1" targetY="1" preserveAlpha="true" result="result0" bias="0"/>
+            <feColorMatrix in="result0" result="result3" values="0 -20 0 0 1 0 -20 0 0 1 0 -20 0 0 1 0 0 0 1 0 "/>
+            <feColorMatrix values="1" in="result3" result="result1" type="luminanceToAlpha"/>
+            <feComposite in2="result1" in="SourceGraphic" result="result2" operator="out"/>
+            <feGaussianBlur result="result7" in="result2" stdDeviation=".01"/>
+            <feColorMatrix values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 8 -1.7 " result="result9"/>
+            <feComposite operator="arithmetic" k2="1.25" in2="result9"/>
+        </filter></defs></svg>
