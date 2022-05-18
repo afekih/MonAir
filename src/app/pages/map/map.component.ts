@@ -99,7 +99,7 @@ export class MapComponent implements OnInit, OnDestroy {
             });
           });
 
-          console.log(this.measures[0]);
+          // console.log(this.measures[0]);
 
           this.map.remove();
 

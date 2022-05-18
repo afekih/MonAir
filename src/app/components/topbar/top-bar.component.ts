@@ -19,7 +19,6 @@ export class TopBarComponent implements OnInit {
 
   ngOnInit(): void {
     this.listTitles = ROUTES;
-    console.log('routes', ROUTES);
   }
 
   getTitle() {

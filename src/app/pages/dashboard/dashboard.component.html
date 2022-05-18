@@ -153,8 +153,8 @@
                     *ngIf="element['last_position']['lat'] !== 0 && element['last_position']['lng'] !== 0; then trueBlock else falseBlock"></div>
                   <ng-template #trueBlock>
                     <a
-                      href="https://www.google.com/maps/place/45%C2%B047'00.9%22N+4%C2%B052'22.1%22E/@{{element['last_position']['lat']}},{{element['last_position']['lng']}},14z">
-                      {{element['last_position']['lat'].toFixed(4) + ', ' + element['last_position']['lng'].toFixed(4)}}
+                      href="https://maps.google.com/maps?q=loc:{{element['last_position']['lat']}},{{element['last_position']['lng']}}">
+                      {{element['last_position']['lat'].toFixed(5) + ', ' + element['last_position']['lng'].toFixed(5)}}
                     </a>
                   </ng-template>
 
