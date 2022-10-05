@@ -29,7 +29,6 @@ import {AdminLayoutModule} from "./layouts/admin-layout/admin-layout.module";
     AdminLayoutModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireDatabaseModule,
-
   ],
   providers: [
     {provide: USE_EMULATOR, useValue: environment.useEmulator ? ['localhost', 9000] : undefined},

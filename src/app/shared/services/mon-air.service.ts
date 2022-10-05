@@ -22,15 +22,22 @@ const parameterUnits: { [key: string]: string } = {
 })
 
 export class MonAirService {
+  get dbMeasuresRef(): AngularFireList<any> {
+    return this._dbMeasuresRef;
+  }
+
+  set dbMeasuresRef(value: AngularFireList<any>) {
+    this._dbMeasuresRef = value;
+  }
   // private serverUrl = environment.serverUrl;
-  private dbMeasuresRef: AngularFireList<any>;
+  private _dbMeasuresRef: AngularFireList<any>;
   private dbNodesRef: AngularFireList<any>;
   private dbStatsRef: AngularFireObject<any>;
   private dbConfRef: AngularFireObject<any>
   private paramRanges: any;
 
   constructor(private fbDatabase: AngularFireDatabase) {
-    this.dbMeasuresRef = fbDatabase.list('/measuresRaw');
+    this._dbMeasuresRef = fbDatabase.list('/measuresRaw');
     this.dbNodesRef = fbDatabase.list('/nodes');
     this.dbStatsRef = fbDatabase.object('/stats');
     this.dbConfRef = fbDatabase.object('/config/paramRanges');

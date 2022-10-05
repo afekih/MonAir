@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild, OnDestroy} from '@angular/core';
+import {Component, OnInit, ViewChild, OnDestroy, NgZone} from '@angular/core';
 import Chart, {ChartItem} from 'chart.js/auto';
 import {MonAirService} from "../../shared/services/mon-air.service";
 import {barChartData, chartOptions} from "../../shared/variables/chart-options";
@@ -32,7 +32,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   public yearsList: string[];
   private activeConnection: Subscription = new Subscription();
 
-  constructor(private monAirService: MonAirService) {
+  constructor(private monAirService: MonAirService, private ngZone: NgZone) {
     this.nodesList = [];
     this.yearlyNodesList = [];
     this.yearlyNodeIDsList = [];
@@ -45,14 +45,16 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.measuresChart = new Chart(
-      <ChartItem>document.getElementById('measuresBarChart'),
-      {
-        type: 'bar',
-        data: barChartData,
-        options: chartOptions
-      }
-    );
+    this.ngZone.runOutsideAngular(() => {
+      this.measuresChart = new Chart(
+        <ChartItem>document.getElementById('measuresBarChart'),
+        {
+          type: 'bar',
+          data: barChartData,
+          options: chartOptions
+        }
+      );
+    });
 
     //TODO: Don't forget to unsubscribe at OnDestroy()
     this.getTotalNumberOfMeasures();
